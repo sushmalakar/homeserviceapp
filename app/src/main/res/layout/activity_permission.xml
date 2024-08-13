@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <!-- Image logo at the top -->
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/logo" />
+
+    <!-- Permission Request title -->
+    <TextView
+        android:id="@+id/permission_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo_image"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:text="Permission Request"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Description text -->
+    <TextView
+        android:id="@+id/permission_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/permission_title"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        android:text="This app needs permission to access your location to provide you with personalized services. Please grant the permission to continue."
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <!-- Grant Permission button -->
+    <Button
+        android:id="@+id/grantPermissionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/permission_description"
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true"
+        android:text="Grant Permission"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/yellow"/>
+
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="yellow">#F1DE2F</color>
+    <color name="teal_200">#80CBC4</color>
+    <color name="teal_700">#00796B</color>
+    <color name="lightGray">#F5F5F5</color>
+    <color name="gray">#777373</color>
+
+
+    <!--    Dashboard Colors-->
+    <color name="home_background">#F2F5F8</color>
+    <color name="banner_background">#F1E9CE</color>
+    <color name="banner_background_light">#56F1E9CE</color>
+
+<!--    Card Colors-->
+    <color name="card1">#D4CBE5</color>
+    <color name="card2">#7ADCCF</color>
+    <color name="card3">#F7C59F</color>
+    <color name="card4">#B8F7D5</color>
+
+
+
+
+
+</resources>
