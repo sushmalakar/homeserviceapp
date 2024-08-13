@@ -37,6 +37,7 @@
         <activity android:name=".MapActivity"/>
         <activity android:name=".UserDashboardActivity"/>
         <activity android:name=".ProfileActivity"/>
+        <activity android:name=".EditProfileActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

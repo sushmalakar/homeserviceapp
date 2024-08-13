@@ -1,7 +1,10 @@
 package com.sushmitamalakar.homeserviceapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import com.sushmitamalakar.homeserviceapp.model.User;
 
 public class ProfileActivity extends AppCompatActivity {
     private TextView titleName, profileName, profileMobile, profileEmail;
+    private Button editProfileBtn;
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
     private static final String TAG = "ProfileActivity";
@@ -38,9 +42,18 @@ public class ProfileActivity extends AppCompatActivity {
         profileName = findViewById(R.id.nameTextView);
         profileMobile = findViewById(R.id.mobileTextView);
         profileEmail = findViewById(R.id.emailTextView);
+        editProfileBtn = findViewById(R.id.editProfileButton);
 
         // Load user data
         loadUserData();
+
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+                finish();
+            }
+        });
     }
 
     private void loadUserData() {
