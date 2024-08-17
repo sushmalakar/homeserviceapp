@@ -21,13 +21,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sushmitamalakar.homeserviceapp.model.User;
 
+import com.bumptech.glide.Glide;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileActivity extends AppCompatActivity {
     private TextView titleName, profileName, profileMobile, profileEmail;
+    private CircleImageView userIconImageView;
     private Button editProfileBtn;
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
     private static final String TAG = "ProfileActivity";
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,11 +42,12 @@ public class ProfileActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-        // Initialize TextViews
+        // Initialize Views
         titleName = findViewById(R.id.titleNameTextView);
         profileName = findViewById(R.id.nameTextView);
         profileMobile = findViewById(R.id.mobileTextView);
         profileEmail = findViewById(R.id.emailTextView);
+        userIconImageView = findViewById(R.id.userIconImageView); // Initialize CircleImageView
         editProfileBtn = findViewById(R.id.editProfileButton);
 
         // Load user data
@@ -74,6 +79,11 @@ public class ProfileActivity extends AppCompatActivity {
                             profileName.setText(user.getFullName());
                             profileMobile.setText(user.getMobileNo());
                             profileEmail.setText(user.getEmail());
+
+                            // Load profile image
+                            if (user.getImageUrl() != null && !user.getImageUrl().isEmpty()) {
+                                Glide.with(ProfileActivity.this).load(user.getImageUrl()).into(userIconImageView);
+                            }
                         }
                     } else {
                         // Handle case where user data does not exist

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -114,7 +113,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     editMobile.setText(mobileNo);
 
                     if (imageUrl != null && !imageUrl.isEmpty()) {
-                        // Load image using a library like Glide or Picasso
                         Glide.with(EditProfileActivity.this).load(imageUrl).into(profileImage);
                     }
                 }
@@ -198,10 +196,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void uploadImage() {
         if (imageUri != null) {
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            final StorageReference fileReference = FirebaseStorage.getInstance()
-                    .getReference()
-                    .child("profile_pics/" + userId + "/" + imageUri.getLastPathSegment());
+            String fileName = userId + "_" + System.currentTimeMillis() + ".jpg";
+            final StorageReference fileReference = storageReference.child("profile_pics/" + fileName);
 
             fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
