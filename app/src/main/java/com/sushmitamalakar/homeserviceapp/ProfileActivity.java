@@ -28,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private static final String TAG = "ProfileActivity";
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

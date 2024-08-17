@@ -24,4 +24,17 @@
         <item name="android:padding">16dp</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+<!--    Circular Image-->
+    <style name="CircularImageView">
+        <!-- Define a circular shape -->
+        <item name="shapeAppearanceOverlay">@style/CircularShapeAppearance</item>
+        <item name="strokeColor">?attr/colorOnSurface</item>
+        <item name="strokeWidth">4dp</item> <!-- Border width -->
+    </style>
+
+    <style name="CircularShapeAppearance">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">60dp</item> <!-- Radius for a 120dp diameter circle -->
+    </style>
 </resources>

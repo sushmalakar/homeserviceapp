@@ -6,13 +6,15 @@ public class User {
     private String mobileNo;
     private String password;
     private String confirmPassword;
+    private String imageUrl;
 
     public User(){}
 
-    public User(String fullName, String email, String mobileNo) {
+    public User(String fullName, String email, String mobileNo, String imageUrl) {
         this.fullName = fullName;
         this.email = email;
         this.mobileNo = mobileNo;
+        this.imageUrl = imageUrl;
 
     }
 
@@ -42,9 +44,14 @@ public class User {
         this.mobileNo = mobileNo;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-
-    // Validation methods
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+// Validation methods
 //    public boolean isValid() {
 //        // Check if any field is null or empty
 //        if (fullName == null || fullName.isEmpty()) return false;

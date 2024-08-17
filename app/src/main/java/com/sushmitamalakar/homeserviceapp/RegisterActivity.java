@@ -112,7 +112,9 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseUser user = auth.getCurrentUser();
                     if (user != null) {
                         String userId = user.getUid();
-                        User newUser = new User(fullName, email, mobileNo);
+                        String defaultImageUrl = ""; // Set this to an empty string or any default value
+                        User newUser = new User(fullName, email, mobileNo, defaultImageUrl);
+//                        User newUser = new User(fullName, email, mobileNo);
                         databaseReference.child(userId).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

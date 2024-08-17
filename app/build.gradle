@@ -31,6 +31,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 }
 
@@ -62,6 +63,30 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.3.0'
     implementation 'com.google.android.libraries.places:places:3.5.0'
     implementation 'com.karumi:dexter:6.2.3'
+
+    //CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Firebase Storage dependency
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+
+
+    //dexer
+    implementation 'com.karumi:dexter:6.2.3'
+
+    implementation 'com.google.firebase:firebase-firestore:18.2.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+
+
+
+
+
+
+
+
+
+
 
 
 
