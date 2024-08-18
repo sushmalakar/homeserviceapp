@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "776470352146",
+    "firebase_url": "https://home-service-app-aa70a-default-rtdb.firebaseio.com",
+    "project_id": "home-service-app-aa70a",
+    "storage_bucket": "home-service-app-aa70a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776470352146:android:0d30cfec5be955fa75a3cb",
+        "android_client_info": {
+          "package_name": "com.sushmitamalakar.homeserviceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTK8yy_T_dtlprnkTXQUOT46gwxk2TjKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776470352146:android:6de7fec1c892631d75a3cb",
+        "android_client_info": {
+          "package_name": "edu.divyagyan.homeserviceadmin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTK8yy_T_dtlprnkTXQUOT46gwxk2TjKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

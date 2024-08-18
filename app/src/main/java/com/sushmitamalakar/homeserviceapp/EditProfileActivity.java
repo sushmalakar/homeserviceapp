@@ -38,6 +38,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sushmitamalakar.homeserviceapp.model.User;
+import com.sushmitamalakar.homeserviceapp.utils.ValidationUtils;
 
 import java.io.IOException;
 
@@ -54,7 +55,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private String userId;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private String photoUrl;
+    private String imageUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,13 +88,13 @@ public class EditProfileActivity extends AppCompatActivity {
         saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (imageUri != null) {
-                    uploadImage();
-                } else {
-                    saveUserData();
+                if (validateInput()) {
+                    if (imageUri != null) {
+                        uploadImage();
+                    } else {
+                        saveUserData();
+                    }
                 }
-                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
-                finish();
             }
         });
     }
@@ -125,23 +126,32 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
+    private boolean validateInput() {
+        String fullName = editName.getText().toString().trim();
+        String email = editEmail.getText().toString().trim();
+        String mobileNo = editMobile.getText().toString().trim();
+
+        boolean isValidFullName = ValidationUtils.validateFullName(fullName, editName);
+        boolean isValidEmail = ValidationUtils.validateEmail(email, editEmail);
+        boolean isValidMobileNo = ValidationUtils.validateMobileNo(mobileNo, editMobile);
+
+        return isValidFullName && isValidEmail && isValidMobileNo;
+    }
+
     private void saveUserData() {
         String fullName = editName.getText().toString().trim();
         String email = editEmail.getText().toString().trim();
         String mobileNo = editMobile.getText().toString().trim();
 
-        if (fullName.isEmpty() || email.isEmpty() || mobileNo.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        User updatedUser = new User(fullName, email, mobileNo, photoUrl);
+        User updatedUser = new User(fullName, email, mobileNo, imageUrl);
 
         databaseReference.child(userId).setValue(updatedUser).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(EditProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
+                    finish();
                 } else {
                     Toast.makeText(EditProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
                 }
@@ -206,7 +216,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    photoUrl = uri.toString();
+                                    imageUrl = uri.toString();
                                     saveUserData(); // Update user data with the new image URL
                                 }
                             });

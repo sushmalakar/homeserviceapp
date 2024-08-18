@@ -1,16 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
-    id 'com.google.gms.google-services'
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
-    namespace 'com.sushmitamalakar.homeserviceapp'
+    namespace 'edu.divyagyan.homeserviceadmin'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.sushmitamalakar.homeserviceapp"
+        applicationId "edu.divyagyan.homeserviceadmin"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -28,10 +26,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    buildFeatures {
-        viewBinding true
-        dataBinding true
     }
 }
 
@@ -56,9 +50,9 @@ dependencies {
 
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:33.1.2')
-//    implementation("com.google.firebase:firebase-auth")
-
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
+
 
     //Google Map
     implementation 'com.google.android.gms:play-services-maps:19.0.0'
@@ -78,37 +72,6 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-firestore:18.2.0'
 
-    //for image loading and caching
     implementation 'com.github.bumptech.glide:glide:4.16.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
-
-
-
-
-
-
-
-
-
-
-
-
-
-    secrets {
-        // Optionally specify a different file name containing your secrets.
-        // The plugin defaults to "local.properties"
-        propertiesFileName = "secrets.properties"
-
-        // A properties file containing default secret values. This file can be
-        // checked in version control.
-        defaultPropertiesFileName = "local.properties"
-
-        // Configure which keys should be ignored by the plugin by providing regular expressions.
-        // "sdk.dir" is ignored by default.
-        ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
-        ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
-    }
-
-
 
 }
