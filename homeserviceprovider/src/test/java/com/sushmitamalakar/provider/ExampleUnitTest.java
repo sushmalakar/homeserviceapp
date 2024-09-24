@@ -1,4 +1,4 @@
-package com.sushmitamalakar.homeserviceprovider;
+package com.sushmitamalakar.provider;
 
 import org.junit.Test;
 

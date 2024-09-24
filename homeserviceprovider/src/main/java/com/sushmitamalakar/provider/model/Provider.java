@@ -1,4 +1,5 @@
-package com.sushmitamalakar.homeserviceprovider.model;
+package com.sushmitamalakar.provider.model;
+
 
 public class Provider {
     private String fullName;
@@ -18,6 +19,7 @@ public class Provider {
 
     }
 
+    // Getters and setters
 
     public String getFullName() {
         return fullName;
@@ -50,5 +52,19 @@ public class Provider {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
+// Validation methods
+//    public boolean isValid() {
+//        // Check if any field is null or empty
+//        if (fullName == null || fullName.isEmpty()) return false;
+//        if (email == null || email.isEmpty()) return false;
+//        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return false;
+//        if (mobileNo == null || mobileNo.isEmpty()) return false;
+//        if (mobileNo.length() != 10) return false;
+//        if (password == null || password.isEmpty()) return false;
+//        if (password.length() < 6) return false;
+//        if (!password.equals(confirmPassword)) return false;
+//
+//        return true;
+//
+//    }
 }

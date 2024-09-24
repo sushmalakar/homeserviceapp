@@ -1,4 +1,4 @@
-package com.sushmitamalakar.homeserviceprovider;
+package com.sushmitamalakar.provider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +21,9 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.sushmitamalakar.homeserviceprovider.model.Provider;
-import com.sushmitamalakar.homeserviceapp.utils.ValidationUtils;
+import com.sushmitamalakar.provider.model.Provider;
+import com.sushmitamalakar.provider.utils.ValidationUtils;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -55,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validateInputs()) {
-                    registerProvider();
+                    registerUser();
                 }
             }
         });
@@ -63,8 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         redirectToLoginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                Toast.makeText(RegisterActivity.this, "successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
     }
@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void registerProvider() {
+    private void registerUser() {
         String fullName = fullNameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String mobileNo = mobileEditText.getText().toString().trim();
@@ -110,14 +110,14 @@ public class RegisterActivity extends AppCompatActivity {
                     if (provider != null) {
                         String providerId = provider.getUid();
                         String defaultImageUrl = ""; // Set this to an empty string or any default value
-                        Provider newProvider = new Provider(fullName, email, mobileNo, defaultImageUrl);
+                        Provider newUser = new Provider(fullName, email, mobileNo, defaultImageUrl);
 //                        User newUser = new User(fullName, email, mobileNo);
-                        databaseReference.child(providerId).setValue(newProvider).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        databaseReference.child(providerId).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-//                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                                 }
                             }
                         });

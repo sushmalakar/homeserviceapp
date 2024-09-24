@@ -27,6 +27,25 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:776470352146:android:621f64b27d44db8675a3cb",
+        "android_client_info": {
+          "package_name": "com.sushmitamalakar.provider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTK8yy_T_dtlprnkTXQUOT46gwxk2TjKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:776470352146:android:6de7fec1c892631d75a3cb",
         "android_client_info": {
           "package_name": "edu.divyagyan.homeserviceadmin"

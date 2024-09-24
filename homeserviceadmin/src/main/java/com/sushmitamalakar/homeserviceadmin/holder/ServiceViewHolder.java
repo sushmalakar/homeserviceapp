@@ -9,7 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
+<<<<<<< HEAD:homeserviceadmin/src/main/java/com/sushmitamalakar/homeserviceadmin/holder/ServiceViewHolder.java
 import com.sushmitamalakar.homeserviceadmin.R;
+=======
+import de.hdodenhof.circleimageview.CircleImageView;
+import edu.divyagyan.homeserviceadmin.R;
+>>>>>>> parent of 5087604 (6th commit user dashboard design with data created):homeserviceadmin/src/main/java/edu/divyagyan/homeserviceadmin/holder/ServiceViewHolder.java
 
 public class ServiceViewHolder extends RecyclerView.ViewHolder {
      public ShapeableImageView serviceImage;
