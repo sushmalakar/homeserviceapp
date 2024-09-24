@@ -1,0 +1,51 @@
+com.sushmitamalakar.providerapp-core-ktx-1.13.0-0 C:\Users\LENOVO\.gradle\caches\transforms-4\01410017fa335bd4c76fbc30d4bc9c68\transformed\core-ktx-1.13.0\res
+com.sushmitamalakar.providerapp-lifecycle-livedata-2.6.2-1 C:\Users\LENOVO\.gradle\caches\transforms-4\0511e0c0ce7693d37070da26a2d31c84\transformed\lifecycle-livedata-2.6.2\res
+com.sushmitamalakar.providerapp-lifecycle-viewmodel-savedstate-2.6.2-2 C:\Users\LENOVO\.gradle\caches\transforms-4\09a42ce0d97b3f9a7973c979faed1094\transformed\lifecycle-viewmodel-savedstate-2.6.2\res
+com.sushmitamalakar.providerapp-core-1.13.0-3 C:\Users\LENOVO\.gradle\caches\transforms-4\1f270290399cca77ded99da89f952850\transformed\core-1.13.0\res
+com.sushmitamalakar.providerapp-annotation-experimental-1.4.0-4 C:\Users\LENOVO\.gradle\caches\transforms-4\2c2bbd5306e4f2113fe5d8a8075c5fb9\transformed\annotation-experimental-1.4.0\res
+com.sushmitamalakar.providerapp-fragment-1.5.4-5 C:\Users\LENOVO\.gradle\caches\transforms-4\2d9fb2679b70955e35d63953ef630764\transformed\fragment-1.5.4\res
+com.sushmitamalakar.providerapp-play-services-measurement-api-22.0.2-6 C:\Users\LENOVO\.gradle\caches\transforms-4\2f8445bbd36f65afd5fddf2009ff9c34\transformed\play-services-measurement-api-22.0.2\res
+com.sushmitamalakar.providerapp-material-1.9.0-7 C:\Users\LENOVO\.gradle\caches\transforms-4\3037d9c9416122d851561101090dd74f\transformed\material-1.9.0\res
+com.sushmitamalakar.providerapp-browser-1.4.0-8 C:\Users\LENOVO\.gradle\caches\transforms-4\31a6d528027512fcba390d3c27d1a383\transformed\browser-1.4.0\res
+com.sushmitamalakar.providerapp-credentials-1.2.0-rc01-9 C:\Users\LENOVO\.gradle\caches\transforms-4\3e8ecfdf50ca95d50686795f9fd1cd9e\transformed\credentials-1.2.0-rc01\res
+com.sushmitamalakar.providerapp-savedstate-1.2.1-10 C:\Users\LENOVO\.gradle\caches\transforms-4\401abac0d744f7f2de90ecb052032c2e\transformed\savedstate-1.2.1\res
+com.sushmitamalakar.providerapp-profileinstaller-1.3.1-11 C:\Users\LENOVO\.gradle\caches\transforms-4\403e7b407d47cf9a2611a16ada36314d\transformed\profileinstaller-1.3.1\res
+com.sushmitamalakar.providerapp-play-services-maps-19.0.0-12 C:\Users\LENOVO\.gradle\caches\transforms-4\47b5a16c0668c0d8f7bc52d8e1402971\transformed\play-services-maps-19.0.0\res
+com.sushmitamalakar.providerapp-activity-1.7.0-13 C:\Users\LENOVO\.gradle\caches\transforms-4\49ba071dde9c6ec25d9d7d648231f215\transformed\activity-1.7.0\res
+com.sushmitamalakar.providerapp-core-runtime-2.2.0-14 C:\Users\LENOVO\.gradle\caches\transforms-4\54e881b0bc7422772235157c35ff5afc\transformed\core-runtime-2.2.0\res
+com.sushmitamalakar.providerapp-cardview-1.0.0-15 C:\Users\LENOVO\.gradle\caches\transforms-4\5cecd7fd261c6914946680184fa2cc2c\transformed\cardview-1.0.0\res
+com.sushmitamalakar.providerapp-firebase-common-21.0.0-16 C:\Users\LENOVO\.gradle\caches\transforms-4\5edca7c4af248a33045d0d9f2f444b5d\transformed\firebase-common-21.0.0\res
+com.sushmitamalakar.providerapp-drawerlayout-1.1.1-17 C:\Users\LENOVO\.gradle\caches\transforms-4\609d5553af4a0db3018ff84b8fd117f2\transformed\drawerlayout-1.1.1\res
+com.sushmitamalakar.providerapp-play-services-basement-18.4.0-18 C:\Users\LENOVO\.gradle\caches\transforms-4\642e0e7a59e81f4492b995a4acf3768e\transformed\play-services-basement-18.4.0\res
+com.sushmitamalakar.providerapp-startup-runtime-1.1.1-19 C:\Users\LENOVO\.gradle\caches\transforms-4\6fabd0f00f13de3aafbeb877bff363ba\transformed\startup-runtime-1.1.1\res
+com.sushmitamalakar.providerapp-glide-4.16.0-20 C:\Users\LENOVO\.gradle\caches\transforms-4\730df4a678879daf66c9c0a631718727\transformed\glide-4.16.0\res
+com.sushmitamalakar.providerapp-lifecycle-livedata-core-2.6.2-21 C:\Users\LENOVO\.gradle\caches\transforms-4\7434a03a78b048d9a7fd912a480c042d\transformed\lifecycle-livedata-core-2.6.2\res
+com.sushmitamalakar.providerapp-credentials-play-services-auth-1.2.0-rc01-22 C:\Users\LENOVO\.gradle\caches\transforms-4\7967b071fba1cbd5c20233d447d8c7ab\transformed\credentials-play-services-auth-1.2.0-rc01\res
+com.sushmitamalakar.providerapp-appcompat-1.7.0-23 C:\Users\LENOVO\.gradle\caches\transforms-4\817b00da9f94147c0acdbd6a8e777def\transformed\appcompat-1.7.0\res
+com.sushmitamalakar.providerapp-lifecycle-runtime-2.6.2-24 C:\Users\LENOVO\.gradle\caches\transforms-4\8fb7b44ca6091325e2f5b707528eec6c\transformed\lifecycle-runtime-2.6.2\res
+com.sushmitamalakar.providerapp-pinview-1.4.4-25 C:\Users\LENOVO\.gradle\caches\transforms-4\95debc2dc2cf3c21ec37a116c96f98d7\transformed\pinview-1.4.4\res
+com.sushmitamalakar.providerapp-places-3.5.0-26 C:\Users\LENOVO\.gradle\caches\transforms-4\95fb69b4635eb93c359ea55f06c57041\transformed\places-3.5.0\res
+com.sushmitamalakar.providerapp-constraintlayout-2.0.1-27 C:\Users\LENOVO\.gradle\caches\transforms-4\9a2703f82a810e40e2ad1e22448e310c\transformed\constraintlayout-2.0.1\res
+com.sushmitamalakar.providerapp-ads-adservices-1.0.0-beta05-28 C:\Users\LENOVO\.gradle\caches\transforms-4\9cea098bb7ed75d3f2f90c2c0624ac11\transformed\ads-adservices-1.0.0-beta05\res
+com.sushmitamalakar.providerapp-lifecycle-process-2.6.2-29 C:\Users\LENOVO\.gradle\caches\transforms-4\9e0643855a014da20574a641d2cf7c5e\transformed\lifecycle-process-2.6.2\res
+com.sushmitamalakar.providerapp-circleimageview-3.1.0-30 C:\Users\LENOVO\.gradle\caches\transforms-4\9fec9889d9ba304e313ad951b8f27f00\transformed\circleimageview-3.1.0\res
+com.sushmitamalakar.providerapp-viewpager2-1.0.0-31 C:\Users\LENOVO\.gradle\caches\transforms-4\a838347d6d255f883a506d7a0b253c7c\transformed\viewpager2-1.0.0\res
+com.sushmitamalakar.providerapp-recyclerview-1.1.0-32 C:\Users\LENOVO\.gradle\caches\transforms-4\aa712d70f7efa1586c107118a4087d2a\transformed\recyclerview-1.1.0\res
+com.sushmitamalakar.providerapp-coordinatorlayout-1.1.0-33 C:\Users\LENOVO\.gradle\caches\transforms-4\aabea58b5c90d1fc120225d66910adf7\transformed\coordinatorlayout-1.1.0\res
+com.sushmitamalakar.providerapp-lifecycle-viewmodel-2.6.2-34 C:\Users\LENOVO\.gradle\caches\transforms-4\b0a827f3d7ee54e1f4f0583219a90868\transformed\lifecycle-viewmodel-2.6.2\res
+com.sushmitamalakar.providerapp-transition-1.2.0-35 C:\Users\LENOVO\.gradle\caches\transforms-4\b7f50451adb0cec01f10463f333d4dd8\transformed\transition-1.2.0\res
+com.sushmitamalakar.providerapp-appcompat-resources-1.7.0-36 C:\Users\LENOVO\.gradle\caches\transforms-4\bb2ca6c425888ce5d66678e5b762e08f\transformed\appcompat-resources-1.7.0\res
+com.sushmitamalakar.providerapp-play-services-auth-20.7.0-37 C:\Users\LENOVO\.gradle\caches\transforms-4\bfdd74749509b4a1c38d89b99772e9fc\transformed\play-services-auth-20.7.0\res
+com.sushmitamalakar.providerapp-emoji2-1.3.0-38 C:\Users\LENOVO\.gradle\caches\transforms-4\c4904754f13ea0e2cef90817cc223afa\transformed\emoji2-1.3.0\res
+com.sushmitamalakar.providerapp-emoji2-views-helper-1.3.0-39 C:\Users\LENOVO\.gradle\caches\transforms-4\c88de6fe1c545383b188cf8586ded679\transformed\emoji2-views-helper-1.3.0\res
+com.sushmitamalakar.providerapp-dexter-6.2.3-40 C:\Users\LENOVO\.gradle\caches\transforms-4\dc58638862d375b3ef6aab972a404c27\transformed\dexter-6.2.3\res
+com.sushmitamalakar.providerapp-play-services-base-18.5.0-41 C:\Users\LENOVO\.gradle\caches\transforms-4\f3c55ee60faa8150f0c1646f7386424c\transformed\play-services-base-18.5.0\res
+com.sushmitamalakar.providerapp-ads-adservices-java-1.0.0-beta05-42 C:\Users\LENOVO\.gradle\caches\transforms-4\ff6b50d46e30dacdd4c40739bc41d646\transformed\ads-adservices-java-1.0.0-beta05\res
+com.sushmitamalakar.providerapp-pngs-43 D:\BCA\6th sem\HomeServiceApp\providerapp\build\generated\res\pngs\debug
+com.sushmitamalakar.providerapp-res-44 D:\BCA\6th sem\HomeServiceApp\providerapp\build\generated\res\processDebugGoogleServices
+com.sushmitamalakar.providerapp-resValues-45 D:\BCA\6th sem\HomeServiceApp\providerapp\build\generated\res\resValues\debug
+com.sushmitamalakar.providerapp-packageDebugResources-46 D:\BCA\6th sem\HomeServiceApp\providerapp\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.sushmitamalakar.providerapp-packageDebugResources-47 D:\BCA\6th sem\HomeServiceApp\providerapp\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.sushmitamalakar.providerapp-debug-48 D:\BCA\6th sem\HomeServiceApp\providerapp\build\intermediates\merged_res\debug\mergeDebugResources
+com.sushmitamalakar.providerapp-debug-49 D:\BCA\6th sem\HomeServiceApp\providerapp\src\debug\res
+com.sushmitamalakar.providerapp-main-50 D:\BCA\6th sem\HomeServiceApp\providerapp\src\main\res
