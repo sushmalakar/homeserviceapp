@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.divyagyan.homeserviceadmin.R;
@@ -62,6 +63,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceViewHolder> {
     @Override
     public int getItemCount() {
         return serviceList.size();
+    }
+
+    public void searchServiceList(ArrayList<Service> searchList){
+        serviceList = searchList;
+        notifyDataSetChanged();
     }
 }
 

@@ -32,8 +32,7 @@
 <!--            android:label="@string/title_activity_test"-->
 <!--            android:theme="@style/Theme.HomeServiceApp.NoActionBar" />-->
         <activity android:name=".RegisterActivity" android:exported="true">
-
-            <!-- android:theme="@style/SplashScreenTheme" -->
+        <!-- android:theme="@style/SplashScreenTheme" -->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import edu.divyagyan.homeserviceadmin.R;
 
 public class ServiceViewHolder extends RecyclerView.ViewHolder {

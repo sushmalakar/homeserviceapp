@@ -46,6 +46,7 @@ dependencies {
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
     implementation libs.firebase.auth
+//    implementation project(':homeserviceadmin')
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -56,7 +57,7 @@ dependencies {
 
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:33.1.2')
-//    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth")
 
     implementation 'com.google.firebase:firebase-analytics'
 

@@ -5,149 +5,161 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:openDrawer="start"
-    android:id="@+id/userDashboardDrawerLayout">
+    android:id="@+id/userDrawerLayout">
+
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:layout_width="match_parent"-->
+<!--         android:layout_height="match_parent"-->
+<!--        android:background="@color/white"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:headerLayout="@layout/menu_header"-->
+<!--        app:menu="@menu/main_menu"-->
+<!--        android:id="@+id/userDashboardNavigationView"/>-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@color/home_background"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/topDashboard"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="20dp">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/userMenuImageView"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginEnd="32dp"-->
+<!--                android:contentDescription="@string/user_menu"-->
+<!--                android:src="@drawable/menu" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/locationTopTextView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_toEndOf="@+id/userMenuImageView"-->
+<!--                android:fontFamily="@font/antic"-->
+<!--                android:text="You are in"-->
+<!--                android:textColor="@color/yellow"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/locationTopTextView"-->
+<!--                android:layout_toEndOf="@+id/userMenuImageView"-->
+<!--                android:fontFamily="@font/antic"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:text="Newroad, Kathmandu" />-->
+
+
+<!--            <ImageView-->
+<!--                android:id="@+id/locationImageView"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:background="@color/banner_background"-->
+<!--                android:contentDescription="@string/user_menu"-->
+<!--                android:src="@drawable/add" />-->
+
+
+<!--        </RelativeLayout>-->
+
+
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_margin="40dp"-->
+<!--            android:background="@color/white"-->
+<!--            android:elevation="8dp">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:text="@string/search_services" />-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:src="@drawable/search_icon" />-->
+
+<!--        </RelativeLayout>-->
+
+<!--        <ScrollView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--             <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="40dp"-->
+<!--                android:layout_marginRight="40dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <RelativeLayout-->
+<!--                        android:layout_width="64dp"-->
+<!--                        android:layout_height="64dp"-->
+<!--                        android:background="@color/banner_background">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="32dp"-->
+<!--                            android:layout_height="32dp"-->
+<!--                            android:layout_centerInParent="true"-->
+<!--                            android:contentDescription="@string/service_icons_description"-->
+<!--                            android:src="@drawable/search_icon" />-->
+
+<!--                    </RelativeLayout>-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        tools:text="Title" />-->
+<!--                </LinearLayout>-->
+
+<!--            </LinearLayout>-->
+
+
+<!--        </ScrollView>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/testbtn"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:text="Click"/>-->
+<!--    </LinearLayout>-->
+
+
+    <include
+        layout="@layout/activity_main_content"/>
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="match_parent"
-         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/menu_header"
-        app:menu="@menu/main_menu"
-        android:id="@+id/userDashboardNavigationView"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/home_background"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:id="@+id/topDashboard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp">
-
-            <ImageView
-                android:id="@+id/userMenuImageView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="32dp"
-                android:contentDescription="@string/user_menu"
-                android:src="@drawable/menu" />
-
-            <TextView
-                android:id="@+id/locationTopTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/userMenuImageView"
-                android:fontFamily="@font/antic"
-                android:text="You are in"
-                android:textColor="@color/yellow"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/locationTopTextView"
-                android:layout_toEndOf="@+id/userMenuImageView"
-                android:fontFamily="@font/antic"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="Newroad, Kathmandu" />
-
-
-            <ImageView
-                android:id="@+id/locationImageView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@color/banner_background"
-                android:contentDescription="@string/user_menu"
-                android:src="@drawable/add" />
-
-
-        </RelativeLayout>
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="40dp"
-            android:background="@color/white"
-            android:elevation="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
-                android:text="@string/search_services" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/search_icon" />
-
-        </RelativeLayout>
-
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <RelativeLayout
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:background="@color/banner_background">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_centerInParent="true"
-                            android:contentDescription="@string/service_icons_description"
-                            android:src="@drawable/search_icon" />
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        tools:text="Title" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-        </ScrollView>
-
-        <Button
-            android:id="@+id/testbtn"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Click"/>
-    </LinearLayout>
+        app:menu="@menu/drawer_items"
+        app:headerLayout="@layout/activity_drawer_header"
+        android:layout_gravity="start"
+        android:id="@+id/navigationView"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
