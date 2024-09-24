@@ -1,4 +1,4 @@
-package com.sushmitamalakar.shared;
+package com.sushmitamalakar.homeserviceadmin;
 
 import org.junit.Test;
 

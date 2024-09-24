@@ -1,4 +1,4 @@
-package com.sushmitamalakar.shared.holder;
+package com.sushmitamalakar.homeserviceadmin.holder;
 
 import android.view.View;
 import android.widget.TextView;

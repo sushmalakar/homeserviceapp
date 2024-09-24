@@ -1,9 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
-    namespace 'edu.divyagyan.homeserviceprovider'
+    namespace 'com.sushmitamalakar.homeserviceprovider'
     compileSdk 34
 
     defaultConfig {
@@ -32,7 +33,44 @@ dependencies {
 
     implementation libs.appcompat
     implementation libs.material
+    implementation libs.firebase.database
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
+    //Pin View Dependency
+    implementation 'io.github.chaosleung:pinview:1.4.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:33.1.2')
+    implementation("com.google.firebase:firebase-auth")
+
+    implementation 'com.google.firebase:firebase-analytics'
+
+    //Google Map
+    implementation 'com.google.android.gms:play-services-maps:19.0.0'
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
+    implementation 'com.google.android.libraries.places:places:3.5.0'
+    implementation 'com.karumi:dexter:6.2.3'
+
+    //CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Firebase Storage dependency
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+
+
+    //dexer
+    implementation 'com.karumi:dexter:6.2.3'
+
+    implementation 'com.google.firebase:firebase-firestore:18.2.0'
+
+    //for image loading and caching
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+
+    implementation project(':app')
+
+
 }

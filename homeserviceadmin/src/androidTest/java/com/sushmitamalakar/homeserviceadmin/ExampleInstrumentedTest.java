@@ -1,4 +1,4 @@
-package com.sushmitamalakar.shared;
+package com.sushmitamalakar.homeserviceadmin;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("edu.divyagyan.shared", appContext.getPackageName());
+        assertEquals("edu.divyagyan.homeserviceadmin", appContext.getPackageName());
     }
 }

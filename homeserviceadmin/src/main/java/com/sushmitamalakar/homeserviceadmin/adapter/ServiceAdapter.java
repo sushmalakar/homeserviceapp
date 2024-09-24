@@ -1,4 +1,4 @@
-package com.sushmitamalakar.shared.adapter;
+package com.sushmitamalakar.homeserviceadmin.adapter;
 
 import android.content.Context;
 import android.content.Intent;

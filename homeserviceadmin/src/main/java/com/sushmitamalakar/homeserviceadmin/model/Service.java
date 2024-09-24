@@ -1,4 +1,4 @@
-package com.sushmitamalakar.shared.model;
+package com.sushmitamalakar.homeserviceadmin.model;
 
 public class Service {
     private String serviceImage;

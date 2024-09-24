@@ -23,5 +23,4 @@ dependencyResolutionManagement {
 rootProject.name = "HomeServiceApp"
 include ':app'
 include ':homeserviceadmin'
-
 include ':homeserviceprovider'
