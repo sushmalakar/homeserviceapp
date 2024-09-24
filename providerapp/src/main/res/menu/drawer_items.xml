@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/manualBookingItem"
+            android:title="Manual Booking"/>
+
+        <item
+            android:id="@+id/yourBookingsItem"
+            android:title="Your Bookings"/>
+    </group>
+
+
+
+    <group>
+        <item
+            android:id="@+id/onGoingOrdersItem"
+            android:title="Ongoing Orders"/>
+
+        <item
+            android:id="@+id/historyItem"
+            android:title="History"/>
+    </group>
+
+    <group>
+        <item
+            android:id="@+id/myDocumentsItem"
+            android:title="My Documents"/>
+
+        <item
+            android:id="@+id/myProfileItem"
+            android:title="My Profile"/>
+
+        <item
+            android:id="@+id/logoutItem"
+            android:title="Logout"/>
+    </group>
+
+
+
+</menu>

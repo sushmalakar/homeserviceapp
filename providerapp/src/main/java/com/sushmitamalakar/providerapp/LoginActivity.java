@@ -1,4 +1,4 @@
-package com.sushmitamalakar.homeserviceapp;
+package com.sushmitamalakar.providerapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,8 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
@@ -98,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                         // Retrieve additional user information if needed from Firebase Realtime Database
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("providers");
                         Query userQuery = databaseReference.orderByChild("email").equalTo(userEmail);
 
                         userQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -110,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String emailFromDB = userSnapshot.child("email").getValue(String.class);
                                     String mobileNoFromDB = userSnapshot.child("mobileNo").getValue(String.class);
 
-                                    Intent intent = new Intent(LoginActivity.this, UserDashboardActivity.class );
+                                    Intent intent = new Intent(LoginActivity.this, ProviderDashboardActivity.class);
                                     intent.putExtra("fullName", namefromDB);
                                     intent.putExtra("email", emailFromDB);
                                     intent.putExtra("mobileNo", mobileNoFromDB);

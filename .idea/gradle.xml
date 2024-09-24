@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/homeserviceadmin" />
             <option value="$PROJECT_DIR$/homeserviceprovider" />
+            <option value="$PROJECT_DIR$/providerapp" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

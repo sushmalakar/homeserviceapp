@@ -25,3 +25,4 @@ include ':app'
 include ':homeserviceadmin'
 
 include ':homeserviceprovider'
+include ':providerapp'
