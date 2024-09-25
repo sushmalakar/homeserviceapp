@@ -7,6 +7,7 @@ public class Provider {
     private String password;
     private String confirmPassword;
     private String imageUrl;
+    private String docImageURL;
 
     public Provider(){}
 
@@ -15,6 +16,7 @@ public class Provider {
         this.email = email;
         this.mobileNo = mobileNo;
         this.imageUrl = imageUrl;
+        this.docImageURL = docImageURL;
 
     }
 
@@ -49,5 +51,13 @@ public class Provider {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getDocImageURL() {
+        return docImageURL;
+    }
+
+    public void setDocImageURL(String docImageURL) {
+        this.docImageURL = docImageURL;
     }
 }

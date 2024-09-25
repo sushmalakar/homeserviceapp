@@ -113,6 +113,9 @@ public class ProviderDashboardActivity extends AppCompatActivity {
                 } else if (id == R.id.logoutItem) {
                     handleLogout();
                     return true;
+                }else if (id == R.id.myDocumentsItem) {
+                    openDocument();
+                    return true;
                 }
                 providerDrawerLayout.closeDrawer(GravityCompat.START);
                 return false;
@@ -212,5 +215,12 @@ public class ProviderDashboardActivity extends AppCompatActivity {
         startActivity(new Intent(ProviderDashboardActivity.this, LoginActivity.class));
         finish();
     }
+
+    private void openDocument() {
+        Log.d("ProviderDashboardActivity", "Opening ProfileActivity");
+        startActivity(new Intent(ProviderDashboardActivity.this, DocumentUploadActivity.class));
+        providerDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
 }
 
