@@ -127,14 +127,12 @@ public class ProviderDashboardActivity extends AppCompatActivity {
     public void searchList(String text) {
         ArrayList<Service> filteredList = new ArrayList<>();
 
-        // Filter from the original service list to ensure it's not modified
         for (Service service : originalServiceList) {
             if (service.getServiceTitle().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(service);
             }
         }
 
-        // Update the service list in the adapter
         serviceAdapter.searchServiceList(filteredList);
         serviceAdapter.notifyDataSetChanged();  // Notify the adapter of the changes
     }
@@ -151,12 +149,12 @@ public class ProviderDashboardActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Service service = snapshot.getValue(Service.class);
                     if (service != null) {
-                        serviceList.add(service);  // Add service to the current list
-                        originalServiceList.add(service);  // Add to original list
+                        serviceList.add(service);
+                        originalServiceList.add(service);
                     }
                 }
 
-                serviceAdapter.notifyDataSetChanged();  // Notify adapter of data changes
+                serviceAdapter.notifyDataSetChanged();
             }
 
             @Override

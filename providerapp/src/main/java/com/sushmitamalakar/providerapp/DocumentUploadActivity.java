@@ -1,6 +1,8 @@
 package com.sushmitamalakar.providerapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,27 +23,43 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.sushmitamalakar.providerapp.model.Provider;
+import com.sushmitamalakar.providerapp.model.Document;
 
 public class DocumentUploadActivity extends AppCompatActivity {
     private Button addDocButton;
-    private ImageView documentImage;
-    private Uri imageUri;
-    private String imageURL;
+    private ImageView frontDocumentImageView, backDocumentImageView;
+    private TextInputEditText citizenshipNumberEditText, issueDateEditText, issueDistrictEditText;
+    private Uri frontImageUri, backImageUri;
+    private String frontImageURL, backImageURL;
     private StorageReference storageReference;
+    private String providerId; // Provider ID to be retrieved from SharedPreferences
+
+    private static final String PREFS_NAME = "ProviderAppPrefs";
+    private static final String KEY_PROVIDER_ID = "providerId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document_upload);
 
-        documentImage = findViewById(R.id.documentImageView);
-        addDocButton = findViewById(R.id.addDocButton);
+        // Retrieve the provider ID from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        providerId = sharedPreferences.getString(KEY_PROVIDER_ID, null); // Set to null if not found
 
+        // Initialize views
+        frontDocumentImageView = findViewById(R.id.frontDocumentImageView);
+        backDocumentImageView = findViewById(R.id.backDocumentImageView);
+        addDocButton = findViewById(R.id.addDocButton);
+        citizenshipNumberEditText = findViewById(R.id.citizenshipNumberEditText);
+        issueDateEditText = findViewById(R.id.issueDateEditText);
+        issueDistrictEditText = findViewById(R.id.issueDistrictEditText);
+
+        // Register activity result launcher for image selection
         final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -50,8 +68,13 @@ public class DocumentUploadActivity extends AppCompatActivity {
                         if (result.getResultCode() == RESULT_OK) {
                             Intent data = result.getData();
                             if (data != null) {
-                                imageUri = data.getData();
-                                documentImage.setImageURI(imageUri);
+                                if (frontImageUri == null) {
+                                    frontImageUri = data.getData();
+                                    frontDocumentImageView.setImageURI(frontImageUri);
+                                } else {
+                                    backImageUri = data.getData();
+                                    backDocumentImageView.setImageURI(backImageUri);
+                                }
                             }
                         } else {
                             Toast.makeText(DocumentUploadActivity.this, "No Image selected", Toast.LENGTH_SHORT).show();
@@ -60,7 +83,8 @@ public class DocumentUploadActivity extends AppCompatActivity {
                 }
         );
 
-        documentImage.setOnClickListener(new View.OnClickListener() {
+        // Set click listeners for image views to select images
+        frontDocumentImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent photoPicker = new Intent(Intent.ACTION_PICK);
@@ -69,83 +93,188 @@ public class DocumentUploadActivity extends AppCompatActivity {
             }
         });
 
+        backDocumentImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPicker = new Intent(Intent.ACTION_PICK);
+                photoPicker.setType("image/*");
+                activityResultLauncher.launch(photoPicker);
+            }
+        });
+
+        // Upload document button click listener
         addDocButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (imageUri != null) {
-                    uploadImageAndData();
-                } else {
-                    Toast.makeText(DocumentUploadActivity.this, "Please select an image", Toast.LENGTH_SHORT).show();
+                if (validateInputs()) {
+                    uploadImagesAndData();
                 }
             }
         });
     }
 
-    private void uploadImageAndData() {
+    private boolean validateInputs() {
+        boolean isValid = true;
+
+        String citizenshipNumber = citizenshipNumberEditText.getText().toString().trim();
+        String issueDate = issueDateEditText.getText().toString().trim();
+        String issueDistrict = issueDistrictEditText.getText().toString().trim();
+
+        // Clear previous errors
+        citizenshipNumberEditText.setError(null);
+        issueDateEditText.setError(null);
+        issueDistrictEditText.setError(null);
+
+        // Validate Citizenship Number
+        if (citizenshipNumber.isEmpty()) {
+            citizenshipNumberEditText.setError("Please enter your citizenship number");
+            isValid = false;
+        }
+
+        // Validate Issue Date
+        if (issueDate.isEmpty()) {
+            issueDateEditText.setError("Please enter the issue date");
+            isValid = false;
+        }
+
+        // Validate Issue District
+        if (issueDistrict.isEmpty()) {
+            issueDistrictEditText.setError("Please enter the issue district");
+            isValid = false;
+        }
+
+        // Validate Front Image URI
+        if (frontImageUri == null) {
+            frontDocumentImageView.setBackgroundResource(R.drawable.error_background); // Optionally highlight the image view
+            isValid = false;
+        } else {
+            frontDocumentImageView.setBackgroundResource(0); // Reset if valid
+        }
+
+        // Validate Back Image URI
+        if (backImageUri == null) {
+            backDocumentImageView.setBackgroundResource(R.drawable.error_background); // Optionally highlight the image view
+            isValid = false;
+        } else {
+            backDocumentImageView.setBackgroundResource(0); // Reset if valid
+        }
+
+        return isValid;
+    }
+
+
+    private void uploadImagesAndData() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(DocumentUploadActivity.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         final AlertDialog dialog = builder.create();
         dialog.show();
 
+        // Upload front image
         storageReference = FirebaseStorage.getInstance().getReference()
                 .child("document_photo")
-                .child(imageUri.getLastPathSegment());
+                .child(frontImageUri.getLastPathSegment());
 
-        storageReference.putFile(imageUri)
+        storageReference.putFile(frontImageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                imageURL = uri.toString();
-                                uploadData();
-                                dialog.dismiss();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(DocumentUploadActivity.this, "Failed to get image URL", Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
+                                frontImageURL = uri.toString();
+                                // After uploading the front image, upload the back image
+                                uploadBackImage(dialog);
                             }
                         });
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(DocumentUploadActivity.this, "Image Upload Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DocumentUploadActivity.this, "Front Image Upload Failed", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
     }
 
-    private void uploadData() {
-        Provider provider = new Provider();
-        provider.setDocImageURL(imageURL);
+    private void uploadBackImage(AlertDialog dialog) {
+        storageReference = FirebaseStorage.getInstance().getReference()
+                .child("document_photo")
+                .child(backImageUri.getLastPathSegment());
 
-        FirebaseDatabase.getInstance().getReference("providers")
-                .child(String.valueOf(System.currentTimeMillis())) // Using timestamp as a unique key
-                .setValue(provider)
+        storageReference.putFile(backImageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                backImageURL = uri.toString();
+                                uploadData(dialog);
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(DocumentUploadActivity.this, "Back Image Upload Failed", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+    }
+
+    private void uploadData(AlertDialog dialog) {
+        // Collect data from input fields
+        String citizenshipNumber = citizenshipNumberEditText.getText().toString();
+        String issueDate = issueDateEditText.getText().toString();
+        String issueDistrict = issueDistrictEditText.getText().toString();
+
+        // Create a Document object
+        Document document = new Document(frontImageURL, backImageURL, citizenshipNumber, issueDate, issueDistrict);
+
+        // Store the data in the 'documents' node with a unique document ID
+        String documentId = FirebaseDatabase.getInstance().getReference("documents").push().getKey(); // Generate a new document ID
+
+        FirebaseDatabase.getInstance().getReference("documents")
+                .child(documentId)  // Use the generated document ID
+                .setValue(document)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(DocumentUploadActivity.this, "Document Uploaded Successfully", Toast.LENGTH_SHORT).show();
-                            documentImage.setImageURI(null); // Clear the image
-                            Log.d("DocumentUploadActivity", "Successful");
+                            // Also store the provider ID in the document for reference
+                            FirebaseDatabase.getInstance().getReference("documents")
+                                    .child(documentId)
+                                    .child("providerId")
+                                    .setValue(providerId)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(DocumentUploadActivity.this, "Document Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                                                clearFields();  // Clear the input fields after success
+                                                Log.d("DocumentUploadActivity", "Success");
+                                            } else {
+                                                Toast.makeText(DocumentUploadActivity.this, "Failed to link provider ID", Toast.LENGTH_SHORT).show();
+                                            }
+                                            dialog.dismiss();
+                                        }
+                                    });
                         } else {
-                            Toast.makeText(DocumentUploadActivity.this, "Failed to Add Document: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DocumentUploadActivity.this, "Failed to upload document", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
                         }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(DocumentUploadActivity.this, "Failed to Add Document: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
                 });
+    }
+
+    private void clearFields() {
+        citizenshipNumberEditText.setText("");
+        issueDateEditText.setText("");
+        issueDistrictEditText.setText("");
+        frontDocumentImageView.setImageURI(null);
+        backDocumentImageView.setImageURI(null);
+        frontImageUri = null;
+        backImageUri = null;
     }
 }

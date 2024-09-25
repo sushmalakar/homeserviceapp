@@ -1,6 +1,7 @@
 package com.sushmitamalakar.providerapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -92,10 +93,17 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        // User signed in successfully, now redirect to the dashboard
+
+                        String uid = authResult.getUser().getUid();
+                        SharedPreferences sharedPreferences = getSharedPreferences("ProviderAppPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("uid", uid);
+                        editor.putString("providerId", uid);
+
+                        editor.apply();
+
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
-                        // Retrieve additional user information if needed from Firebase Realtime Database
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("providers");
                         Query userQuery = databaseReference.orderByChild("email").equalTo(userEmail);
 
