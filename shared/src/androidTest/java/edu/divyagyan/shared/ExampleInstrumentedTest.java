@@ -1,4 +1,4 @@
-package edu.divyagyan.shared;
+package com.sushmitamalakar.shared;
 
 import android.content.Context;
 

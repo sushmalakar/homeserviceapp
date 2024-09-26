@@ -2,31 +2,24 @@ package com.sushmitamalakar.homeserviceapp;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.Place.Field;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -37,23 +30,28 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.util.Arrays;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+
     private static final int FINE_PERMISSION_CODE = 1;
     private GoogleMap mMap;
     private Location currentLocation;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private LocationCallback locationCallback;
-    private Button buttonFindServices;
+    private Marker selectedMarker;
+    private boolean isFirstLocationUpdate = true; // To control only the initial redirection to current location
 
     private final ActivityResultLauncher<Intent> locationSettingsLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-                // Re-check if location services are enabled after returning from settings
                 if (isLocationEnabled()) {
                     getLastLocation();
                 } else {
@@ -66,19 +64,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-
-        buttonFindServices = findViewById(R.id.findServicesButton);
-        buttonFindServices.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MapActivity.this, UserDashboardActivity.class);
-                startActivity(intent);
-            }
-        });
-
         // Initialize the Places API
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), "AIzaSyC0E-jWuPOWUtLyF9Vn5uahax987JQVPoY");
+            Places.initialize(getApplicationContext(), "AIzaSyCL2N9v3XaFNGY7UPbuBfS0Ekntuv97D9Q");
         }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -89,21 +77,25 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mapFragment.getMapAsync(this);
         }
 
-        // Initialize AutocompleteSupportFragment
+        // Initialize AutocompleteSupportFragment for searching places
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
         if (autocompleteFragment != null) {
-            autocompleteFragment.setPlaceFields(Arrays.asList(Field.ID, Field.NAME, Field.LAT_LNG));
+            autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
 
             autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(@NonNull Place place) {
                     LatLng latLng = place.getLatLng();
                     if (latLng != null) {
+                        // Clear existing markers and place a new one at the selected place
                         mMap.clear();
-                        mMap.addMarker(new MarkerOptions().position(latLng).title(place.getName()));
+                        selectedMarker = mMap.addMarker(new MarkerOptions().position(latLng).title(place.getName()));
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+                        // Show an AlertDialog to confirm the selected location
+                        showConfirmationDialog(latLng);
                     }
                 }
 
@@ -113,18 +105,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             });
         }
+    }
 
-        // Initialize LocationCallback
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(@NonNull LocationResult locationResult) {
-                if (locationResult.getLocations().isEmpty()) {
-                    return;
-                }
-                currentLocation = locationResult.getLocations().get(0);
-                updateMap();
-            }
-        };
+    private void showConfirmationDialog(LatLng latLng) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
+        builder.setTitle("Confirm Location");
+        builder.setMessage("Do you want to set this location: " + latLng.latitude + ", " + latLng.longitude + "?");
+
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            Toast.makeText(MapActivity.this, "Location Confirmed: " + latLng.latitude + ", " + latLng.longitude, Toast.LENGTH_SHORT).show();
+            // Perform action after confirmation, like saving the location
+        });
+
+        builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+
+        builder.show();
     }
 
     private boolean isLocationEnabled() {
@@ -139,7 +134,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
         if (!isLocationEnabled()) {
-            // Redirect to location settings using ActivityResultLauncher
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             locationSettingsLauncher.launch(intent);
             return;
@@ -151,31 +145,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onSuccess(Location location) {
                 if (location != null) {
                     currentLocation = location;
-                    updateMap();
-                } else {
-                    // Location is null, request location updates
-                    requestLocationUpdates();
+                    // Only update the map the first time when activity starts
+                    if (isFirstLocationUpdate) {
+                        updateMapWithCurrentLocation();
+                        isFirstLocationUpdate = false;
+                    }
                 }
             }
         });
     }
 
-    private void requestLocationUpdates() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(10000); // 10 seconds
-        locationRequest.setFastestInterval(5000); // 5 seconds
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, getMainLooper());
-        }
-    }
-
-    private void updateMap() {
+    private void updateMapWithCurrentLocation() {
         if (mMap != null && currentLocation != null) {
             LatLng myLocation = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             mMap.clear(); // Clear previous markers
-            mMap.addMarker(new MarkerOptions().position(myLocation).title("My Location"));
+            selectedMarker = mMap.addMarker(new MarkerOptions().position(myLocation).title("My Location"));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
         }
     }
@@ -183,7 +167,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        getLastLocation();
+        getLastLocation(); // Only call this once when the map is ready
+
+        // Set up click listener for placing a marker on the map
+        mMap.setOnMapClickListener(latLng -> {
+            if (selectedMarker != null) {
+                selectedMarker.remove(); // Remove the old marker if present
+            }
+            selectedMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Selected Location"));
+
+            // Show an AlertDialog to confirm the selected location
+            showConfirmationDialog(latLng);
+        });
     }
 
     @Override
@@ -201,16 +196,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onResume() {
         super.onResume();
-        // Start requesting location updates when the activity is resumed
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            requestLocationUpdates();
+            // Do not request location updates here to avoid resetting the location when resuming activity
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // Stop location updates when the activity is paused to save battery
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        // No need to stop location updates as we are not continuously fetching them
     }
 }

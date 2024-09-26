@@ -2,6 +2,7 @@ package com.sushmitamalakar.homeserviceapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -97,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
                         // User signed in successfully, now redirect to the dashboard
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
+
+
                         // Retrieve additional user information if needed from Firebase Realtime Database
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
                         Query userQuery = databaseReference.orderByChild("email").equalTo(userEmail);
@@ -111,6 +114,8 @@ public class LoginActivity extends AppCompatActivity {
                                     String mobileNoFromDB = userSnapshot.child("mobileNo").getValue(String.class);
 
                                     Intent intent = new Intent(LoginActivity.this, UserDashboardActivity.class );
+//                                    Intent intent = new Intent(LoginActivity.this, MapActivity.class );
+
                                     intent.putExtra("fullName", namefromDB);
                                     intent.putExtra("email", emailFromDB);
                                     intent.putExtra("mobileNo", mobileNoFromDB);

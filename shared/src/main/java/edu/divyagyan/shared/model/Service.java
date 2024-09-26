@@ -1,4 +1,4 @@
-package edu.divyagyan.shared.model;
+package com.sushmitamalakar.shared.model;
 
 public class Service {
     private String serviceImage;

@@ -86,12 +86,12 @@ public class UserDashboardActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 searchList(newText);
-                return true;  // Return true as we are handling the query
+                return true;
             }
         });
 
-        loadUserData();  // Load user data from Firebase
-        fetchServices(); // Fetch and display services from Firebase
+        loadUserData();
+        fetchServices();
 
         // Drawer toggle button listener
         toggleImageButton.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +101,6 @@ public class UserDashboardActivity extends AppCompatActivity {
             }
         });
 
-        // Navigation drawer item click listener
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -132,7 +131,7 @@ public class UserDashboardActivity extends AppCompatActivity {
 
         // Update the service list in the adapter
         serviceAdapter.searchServiceList(filteredList);
-        serviceAdapter.notifyDataSetChanged();  // Notify the adapter of the changes
+        serviceAdapter.notifyDataSetChanged();
     }
 
     // Fetch all services from Firebase
@@ -141,18 +140,18 @@ public class UserDashboardActivity extends AppCompatActivity {
         servicesReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                serviceList.clear();  // Clear current list
-                originalServiceList.clear();  // Clear original list
+                serviceList.clear();
+                originalServiceList.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Service service = snapshot.getValue(Service.class);
                     if (service != null) {
-                        serviceList.add(service);  // Add service to the current list
-                        originalServiceList.add(service);  // Add to original list
+                        serviceList.add(service);
+                        originalServiceList.add(service);
                     }
                 }
 
-                serviceAdapter.notifyDataSetChanged();  // Notify adapter of data changes
+                serviceAdapter.notifyDataSetChanged();
             }
 
             @Override

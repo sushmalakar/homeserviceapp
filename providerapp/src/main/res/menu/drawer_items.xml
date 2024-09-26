@@ -20,6 +20,10 @@
         <item
             android:id="@+id/historyItem"
             android:title="History"/>
+
+        <item
+            android:id="@+id/locationItem"
+            android:title="My Location"/>
     </group>
 
     <group>

@@ -2,27 +2,27 @@
     <string name="app_name">ProviderApp</string>
 
 
-        <string name="loginButton">Login</string>
-        <string name="registerButton">Register</string>
-        <string name="welcome">Welcome</string>
-        <string name="register_to_start_your_journey">Register to Start Your Journey</string>
-        <string name="full_name">Full Name</string>
-        <string name="email">Email</string>
-        <string name="mobile_no">Mobile No.</string>
-        <string name="password">Password</string>
-        <string name="confirm_password">Confirm Password</string>
-        <string name="already_have_an_account_login">Already have an account? LOGIN</string>
+    <string name="loginButton">Login</string>
+    <string name="registerButton">Register</string>
+    <string name="welcome">Welcome</string>
+    <string name="register_to_start_your_journey">Register to Start Your Journey</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="mobile_no">Mobile No.</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_an_account_login">Already have an account? LOGIN</string>
 
-        <!--    OTP Screen-->
-        <string name="close_icon">close icon</string>
-        <string name="otp">OTP</string>
-        <string name="verification">Verification</string>
-        <string name="otp_description">Enter OTP Sent On</string>
-        <string name="verify_code_button">Verify Code</string>
-        <string name="user_menu">menu</string>
-        <string name="search_services">Search Services...</string>
+    <!--    OTP Screen-->
+    <string name="close_icon">close icon</string>
+    <string name="otp">OTP</string>
+    <string name="verification">Verification</string>
+    <string name="otp_description">Enter OTP Sent On</string>
+    <string name="verify_code_button">Verify Code</string>
+    <string name="user_menu">menu</string>
+    <string name="search_services">Search Services...</string>
 
-        <!--    Google Map API Key-->
-        <string name="map_api_key">AIzaSyCL2N9v3XaFNGY7UPbuBfS0Ekntuv97D9Q</string>
-        <string name="service_icons_description">Service Icon\n</string>
+    <!--    Google Map API Key-->
+    <string name="map_api_key">AIzaSyCL2N9v3XaFNGY7UPbuBfS0Ekntuv97D9Q</string>
+    <string name="service_icons_description">Service Icon\n</string>
 </resources>

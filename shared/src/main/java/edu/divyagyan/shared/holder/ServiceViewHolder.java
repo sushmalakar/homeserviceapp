@@ -1,4 +1,4 @@
-package edu.divyagyan.shared.holder;
+package com.sushmitamalakar.shared.holder;
 
 import android.view.View;
 import android.widget.TextView;
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
-import edu.divyagyan.homeserviceadmin.R;
+import com.sushmitamalakar.homeserviceadmin.R;
 
 public class ServiceViewHolder extends RecyclerView.ViewHolder {
      public ShapeableImageView serviceImage;

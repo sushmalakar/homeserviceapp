@@ -1,4 +1,4 @@
-package edu.divyagyan.shared.adapter;
+package com.sushmitamalakar.shared.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +14,10 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.divyagyan.homeserviceadmin.R;
-import edu.divyagyan.homeserviceadmin.ShowProviderActivity;
-import edu.divyagyan.homeserviceadmin.holder.ServiceViewHolder;
-import edu.divyagyan.homeserviceadmin.model.Service;
+import com.sushmitamalakar.homeserviceadmin.R;
+import com.sushmitamalakar.homeserviceadmin.ShowProviderActivity;
+import com.sushmitamalakar.homeserviceadmin.holder.ServiceViewHolder;
+import com.sushmitamalakar.homeserviceadmin.model.Service;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceViewHolder> {
     private Context context;

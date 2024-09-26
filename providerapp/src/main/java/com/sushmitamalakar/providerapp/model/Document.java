@@ -4,20 +4,22 @@ package com.sushmitamalakar.providerapp.model;
 public class Document {
     private String frontImageUrl;
     private String backImageUrl;
-    private String citizenshipNumber;
-    private String issueDate;
-    private String issueDistrict;
+    private String status;
+//    private String citizenshipNumber;
+//    private String issueDate;
+//    private String issueDistrict;
 
     public Document() {
-        // Default constructor required for calls to DataSnapshot.getValue(Document.class)
     }
 
-    public Document(String frontImageUrl, String backImageUrl, String citizenshipNumber, String issueDate, String issueDistrict) {
+    public Document(String frontImageUrl, String backImageUrl) {
         this.frontImageUrl = frontImageUrl;
         this.backImageUrl = backImageUrl;
-        this.citizenshipNumber = citizenshipNumber;
-        this.issueDate = issueDate;
-        this.issueDistrict = issueDistrict;
+        this.status = "Pending";
+
+//        this.citizenshipNumber = citizenshipNumber;
+//        this.issueDate = issueDate;
+//        this.issueDistrict = issueDistrict;
     }
 
     public String getFrontImageUrl() {
@@ -35,28 +37,35 @@ public class Document {
     public void setBackImageUrl(String backImageUrl) {
         this.backImageUrl = backImageUrl;
     }
-
-    public String getCitizenshipNumber() {
-        return citizenshipNumber;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCitizenshipNumber(String citizenshipNumber) {
-        this.citizenshipNumber = citizenshipNumber;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(String issueDate) {
-        this.issueDate = issueDate;
-    }
-
-    public String getIssueDistrict() {
-        return issueDistrict;
-    }
-
-    public void setIssueDistrict(String issueDistrict) {
-        this.issueDistrict = issueDistrict;
-    }
+//    public String getCitizenshipNumber() {
+//        return citizenshipNumber;
+//    }
+//
+//    public void setCitizenshipNumber(String citizenshipNumber) {
+//        this.citizenshipNumber = citizenshipNumber;
+//    }
+//
+//    public String getIssueDate() {
+//        return issueDate;
+//    }
+//
+//    public void setIssueDate(String issueDate) {
+//        this.issueDate = issueDate;
+//    }
+//
+//    public String getIssueDistrict() {
+//        return issueDistrict;
+//    }
+//
+//    public void setIssueDistrict(String issueDistrict) {
+//        this.issueDistrict = issueDistrict;
+//    }
 }

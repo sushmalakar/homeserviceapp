@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'edu.divyagyan.homeserviceadmin'
+    namespace 'com.sushmitamalakar.homeserviceadmin'
     compileSdk 34
 
     defaultConfig {
@@ -73,7 +73,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:18.2.0'
 
     implementation 'com.github.bumptech.glide:glide:4.16.0'
-
-
 
 }
