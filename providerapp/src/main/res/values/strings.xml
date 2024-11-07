@@ -12,6 +12,8 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="already_have_an_account_login">Already have an account? LOGIN</string>
+    <string name="menu_drawer_open">Drawer Open</string>
+    <string name="menu_drawer_close">Drawer Close</string>
 
     <!--    OTP Screen-->
     <string name="close_icon">close icon</string>

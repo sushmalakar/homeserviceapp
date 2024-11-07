@@ -19,9 +19,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sushmitamalakar.providerapp.databinding.ActivityDocumentUploadBinding;
+import com.sushmitamalakar.providerapp.databinding.ActivityViewDocumentBinding;
 import com.sushmitamalakar.providerapp.model.Document;
 
-public class ViewDocumentActivity extends AppCompatActivity {
+public class ViewDocumentActivity extends DrawerBaseActivity {
+
+    ActivityViewDocumentBinding activityViewDocumentBinding;
     private ImageView frontDocumentImageView, backDocumentImageView;
     private TextView documentStatusTextView; // TextView for displaying the document status
     private String providerId;
@@ -31,7 +35,9 @@ public class ViewDocumentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_document);
+        activityViewDocumentBinding = ActivityViewDocumentBinding.inflate(getLayoutInflater());
+        allocateActivityTitle("Document Upload");
+        setContentView(activityViewDocumentBinding.getRoot());
 
         // Initialize views
         frontDocumentImageView = findViewById(R.id.frontDocumentImageView);

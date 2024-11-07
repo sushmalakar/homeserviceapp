@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:context=".AdminDashboardActivity">
 
     <Button
         android:id="@+id/addServiceButton"
@@ -15,6 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show Service" />
+
+    <Button
+        android:id="@+id/verifyDocumentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pending Documents" />
 
 
 </LinearLayout>

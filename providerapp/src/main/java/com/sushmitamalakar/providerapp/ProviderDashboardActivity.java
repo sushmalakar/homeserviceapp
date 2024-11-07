@@ -1,6 +1,6 @@
 package com.sushmitamalakar.providerapp;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,8 +47,8 @@ public class ProviderDashboardActivity extends AppCompatActivity {
     private GridView servicesGridView;
     private ServiceAdapter serviceAdapter;
     private ArrayList<Service> serviceList;
-    private ArrayList<Service> originalServiceList;  // Store the original list
-    private ArrayList<DataSnapshot> serviceSnapshots = new ArrayList<>();  // Store Firebase snapshots
+    private ArrayList<Service> originalServiceList;
+    private ArrayList<DataSnapshot> serviceSnapshots = new ArrayList<>();
     private SearchView searchView;
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
@@ -75,14 +75,12 @@ public class ProviderDashboardActivity extends AppCompatActivity {
         // Initialize GridView and adapter
         servicesGridView = findViewById(R.id.servicesGridView);
         serviceList = new ArrayList<>();
-        originalServiceList = new ArrayList<>();  // Initialize original service list
+        originalServiceList = new ArrayList<>();
         serviceAdapter = new ServiceAdapter(ProviderDashboardActivity.this, serviceList);
         servicesGridView.setAdapter(serviceAdapter);
 
-        // Initialize SearchView and configure search behavior
         searchView = findViewById(R.id.searchView);
         searchView.clearFocus();
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -99,19 +97,17 @@ public class ProviderDashboardActivity extends AppCompatActivity {
         loadUserData();
         fetchServices();
 
-        // Handle the click on Service icons
         servicesGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Retrieve the Firebase-generated serviceId
                 String serviceId = getFirebaseKeyFromSnapshot(position);
 
-                // Show the dialog and pass the serviceId to save charge
-                showChargeInputDialog(serviceId);
+                // Check document verification status before showing charge dialog
+                checkDocumentVerificationStatus(serviceId);
             }
         });
 
-        // Drawer toggle button listener
         toggleImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +115,6 @@ public class ProviderDashboardActivity extends AppCompatActivity {
             }
         });
 
-        // Navigation drawer item click listener
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -133,6 +128,9 @@ public class ProviderDashboardActivity extends AppCompatActivity {
                 } else if (id == R.id.myDocumentsItem) {
                     openDocument();
                     return true;
+                }else if (id == R.id.locationItem) {
+                    openLocation();
+                    return true;
                 }
                 providerDrawerLayout.closeDrawer(GravityCompat.START);
                 return false;
@@ -140,69 +138,114 @@ public class ProviderDashboardActivity extends AppCompatActivity {
         });
     }
 
+    // Method to check document verification status
+    private void checkDocumentVerificationStatus(String serviceId) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            String providerId = currentUser.getUid();
+            DatabaseReference documentRef = FirebaseDatabase.getInstance().getReference("documents");
+
+            documentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    boolean documentFound = false;
+
+                    for (DataSnapshot documentSnapshot : snapshot.getChildren()) {
+                        String docProviderId = documentSnapshot.child("providerId").getValue(String.class);
+
+                        // Check if this document belongs to the current provider
+                        if (providerId.equals(docProviderId)) {
+                            documentFound = true;
+                            String status = documentSnapshot.child("status").getValue(String.class);
+
+                            if ("Verified".equalsIgnoreCase(status)) {
+                                showChargeInputDialog(serviceId);
+                            } else {
+                                showVerificationRequiredDialog();
+                            }
+                            break;
+                        }
+                    }
+
+                    if (!documentFound) {
+                        Log.d("ProviderDashboard", "No document found for providerId: " + providerId);
+                        showVerificationRequiredDialog();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(ProviderDashboardActivity.this, "Error checking document verification status", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+
+    // Helper method to show verification required dialog
+    private void showVerificationRequiredDialog() {
+        new AlertDialog.Builder(ProviderDashboardActivity.this)
+                .setTitle("Verification Required")
+                .setMessage("Your document is not verified. You cannot add a service charge.")
+                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
     // Method to fetch serviceId from position
     private String getFirebaseKeyFromSnapshot(int position) {
         DataSnapshot snapshot = serviceSnapshots.get(position);
-        return snapshot.getKey();  // This gets the unique Firebase key
+        return snapshot.getKey();
     }
 
-    // Method to show dialog to enter service charge
     private void showChargeInputDialog(String serviceId) {
-        // Create and configure the dialog
-        Dialog dialog = new Dialog(ProviderDashboardActivity.this);
-        dialog.setContentView(R.layout.dialog_service_charge);
+        new AlertDialog.Builder(ProviderDashboardActivity.this)
+                .setTitle("Confirm Service")
+                .setMessage("Do you want to add this service?")
+                .setPositiveButton("Yes", (dialogInterface, i) -> showServiceChargeDialog(serviceId))
+                .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss())
+                .show();
+    }
 
-        // Find views from the dialog layout
-        EditText chargeEditText = dialog.findViewById(R.id.chargeEditText);
-        Button saveChargeButton = dialog.findViewById(R.id.saveChargeButton);
+    private void showServiceChargeDialog(String serviceId) {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_service_charge, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ProviderDashboardActivity.this);
+        builder.setView(dialogView);
 
-        // Set the click listener for the save button
-        saveChargeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get the entered charge
-                String enteredCharge = chargeEditText.getText().toString().trim();
+        EditText chargeEditText = dialogView.findViewById(R.id.chargeEditText);
+        TextView chargeNoteTextView = dialogView.findViewById(R.id.chargeNoteTextView);
+        Button saveChargeButton = dialogView.findViewById(R.id.saveChargeButton);
 
-                if (!enteredCharge.isEmpty()) {
-                    // Get the logged-in provider's ID
-                    FirebaseUser currentUser = auth.getCurrentUser();
-                    if (currentUser != null) {
-                        String providerId = currentUser.getUid();
+        // Set the note below Hourly Charge
+        chargeNoteTextView.setText("Note: This charge is calculated on an hourly basis.");
 
-                        // Save the service charge to Firebase using serviceId and providerId
-                        saveServiceChargeToFirebase(serviceId, providerId, enteredCharge);
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
-                        // Close the dialog
-                        dialog.dismiss();
-                    } else {
-                        Toast.makeText(ProviderDashboardActivity.this, "User not logged in", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(ProviderDashboardActivity.this, "Please enter a valid charge", Toast.LENGTH_SHORT).show();
+        saveChargeButton.setOnClickListener(v -> {
+            String enteredCharge = chargeEditText.getText().toString().trim();
+            if (!enteredCharge.isEmpty()) {
+                FirebaseUser currentUser = auth.getCurrentUser();
+                if (currentUser != null) {
+                    String providerId = currentUser.getUid();
+                    saveServiceChargeToFirebase(serviceId, providerId, enteredCharge);
+                    dialog.dismiss();
                 }
+            } else {
+                Toast.makeText(ProviderDashboardActivity.this, "Please enter a valid charge", Toast.LENGTH_SHORT).show();
             }
         });
-
-        // Show the dialog
-        dialog.show();
     }
 
-    // Method to save service charge to Firebase
     private void saveServiceChargeToFirebase(String serviceId, String providerId, String charge) {
-        // Create a reference to the "service_charge" node in Firebase
         DatabaseReference serviceChargeRef = FirebaseDatabase.getInstance().getReference("service_charge");
-
-        // Create a unique key for this entry
         String chargeId = serviceChargeRef.push().getKey();
 
         if (chargeId != null) {
-            // Create a map to hold the charge details
             HashMap<String, Object> chargeMap = new HashMap<>();
             chargeMap.put("serviceId", serviceId);
             chargeMap.put("providerId", providerId);
             chargeMap.put("charge", charge);
 
-            // Save the charge details in the "service_charge" node
             serviceChargeRef.child(chargeId).setValue(chargeMap)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -211,12 +254,9 @@ public class ProviderDashboardActivity extends AppCompatActivity {
                             Toast.makeText(ProviderDashboardActivity.this, "Failed to save charge", Toast.LENGTH_SHORT).show();
                         }
                     });
-        } else {
-            Toast.makeText(ProviderDashboardActivity.this, "Failed to create charge ID", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Method to search services based on query
     public void searchList(String text) {
         ArrayList<Service> filteredList = new ArrayList<>();
 
@@ -227,31 +267,26 @@ public class ProviderDashboardActivity extends AppCompatActivity {
         }
 
         serviceAdapter.searchServiceList(filteredList);
-        serviceAdapter.notifyDataSetChanged();  // Notify the adapter of the changes
+        serviceAdapter.notifyDataSetChanged();
     }
 
-    // Fetch all services from Firebase
     private void fetchServices() {
         DatabaseReference servicesReference = FirebaseDatabase.getInstance().getReference("services");
         servicesReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                serviceList.clear();  // Clear current list
-                originalServiceList.clear();  // Clear original list
-                serviceSnapshots.clear(); // Clear snapshots list
+                serviceList.clear();
+                originalServiceList.clear();
+                serviceSnapshots.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Get the serviceId (Firebase key)
-                    String serviceId = snapshot.getKey();  // This gets the unique Firebase key
-
-                    // Fetch the service object from the snapshot
+                    String serviceId = snapshot.getKey();
                     Service service = snapshot.getValue(Service.class);
 
-                    // Add the service to the list
                     if (service != null) {
                         serviceList.add(service);
-                        originalServiceList.add(service);  // Add serviceId to track the service
-                        serviceSnapshots.add(snapshot);  // Store the snapshot for later retrieval
+                        originalServiceList.add(service);
+                        serviceSnapshots.add(snapshot);
                     }
                 }
 
@@ -266,7 +301,6 @@ public class ProviderDashboardActivity extends AppCompatActivity {
         });
     }
 
-    // Method to load user data from Firebase and update the UI
     private void loadUserData() {
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
@@ -282,7 +316,7 @@ public class ProviderDashboardActivity extends AppCompatActivity {
                             if (provider.getImageUrl() != null && !provider.getImageUrl().isEmpty()) {
                                 Glide.with(ProviderDashboardActivity.this).load(provider.getImageUrl()).into(profileImageView);
                             } else {
-                                profileImageView.setImageResource(R.drawable.user_icon); // default image
+                                profileImageView.setImageResource(R.drawable.user_icon);
                             }
                         }
                     } else {
@@ -301,14 +335,12 @@ public class ProviderDashboardActivity extends AppCompatActivity {
         }
     }
 
-    // Method to open the Profile Activity
     private void openProfileActivity() {
         Log.d("UserDashboardActivity", "Opening ProfileActivity");
         startActivity(new Intent(ProviderDashboardActivity.this, ProfileActivity.class));
         providerDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    // Method to handle user logout
     private void handleLogout() {
         auth.signOut();
         startActivity(new Intent(ProviderDashboardActivity.this, LoginActivity.class));
@@ -320,4 +352,10 @@ public class ProviderDashboardActivity extends AppCompatActivity {
         startActivity(new Intent(ProviderDashboardActivity.this, DocumentUploadActivity.class));
         providerDrawerLayout.closeDrawer(GravityCompat.START);
     }
+    private void openLocation() {
+        Log.d("ProviderDashboardActivity", "Opening MapActivity");
+        startActivity(new Intent(ProviderDashboardActivity.this, MapActivity.class));
+        providerDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
 }

@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.sushmitamalakar.homeserviceapp.model.User;
 
 import java.util.Objects;
 
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailLogin, passwordLogin;
     private Button loginButton;
     private TextView redirectToRegister;
+    private TextView forgotPasswordTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordLogin = findViewById(R.id.loginPassEditText);
         loginButton = findViewById(R.id.loginButton);
         redirectToRegister = findViewById(R.id.redirectToRegisterTextView);
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +62,14 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+            }
+        });
+
     }
 
     private boolean validateEmail() {

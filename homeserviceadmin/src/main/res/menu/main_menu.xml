@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/manualBookingItem"
+            android:title="Manual Booking"/>
+        <item
+            android:id="@+id/yourBookingsItem"
+            android:title="Your Bookings"/>
+    </group>
+    <item android:title="Profile">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/myProfileItem"
+                    android:title="My Profile"/>
+                <item
+                    android:id="@+id/logoutItem"
+                    android:title="Logout"/>
+            </group>
+        </menu>
+    </item>
+</menu>

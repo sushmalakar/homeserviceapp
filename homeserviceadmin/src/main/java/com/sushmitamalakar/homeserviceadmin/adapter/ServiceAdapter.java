@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import com.sushmitamalakar.homeserviceadmin.EditServiceActivity;
 import com.sushmitamalakar.homeserviceadmin.R;
 import com.sushmitamalakar.homeserviceadmin.ShowProviderActivity;
 import com.sushmitamalakar.homeserviceadmin.holder.ServiceViewHolder;
@@ -47,17 +48,32 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceViewHolder> {
 
         holder.serviceName.setText(serviceList.get(position).getServiceTitle());
 
+        // Handle the service card click to show providers
         holder.serviceRecyclerCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ShowProviderActivity.class);
                 intent.putExtra("Image", imageUrl);
                 intent.putExtra("ServiceName", serviceList.get(holder.getAdapterPosition()).getServiceTitle());
-
                 context.startActivity(intent);
             }
         });
+
+        // Handle the edit icon click
+        holder.editIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open an edit service activity or show a dialog
+                Intent editIntent = new Intent(context, EditServiceActivity.class);
+                editIntent.putExtra("ServiceId", serviceList.get(holder.getAdapterPosition()).getServiceId());
+                editIntent.putExtra("ServiceName", serviceList.get(holder.getAdapterPosition()).getServiceTitle());
+                editIntent.putExtra("ServiceImage", serviceList.get(holder.getAdapterPosition()).getServiceImage());
+
+                context.startActivity(editIntent);
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {

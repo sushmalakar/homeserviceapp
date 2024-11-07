@@ -47,7 +47,7 @@ public class AddServiceActivity extends AppCompatActivity {
 
         serviceImage = findViewById(R.id.serviceImageView);
 //        servicePrice = findViewById(R.id.priceEditText);
-        serviceName = findViewById(R.id.serviceEditText);
+        serviceName = findViewById(R.id.serviceNameEditText);
         addServiceButton = findViewById(R.id.addServiceButton);
 
         // Activity Result Launcher for picking images
@@ -145,8 +145,8 @@ public class AddServiceActivity extends AppCompatActivity {
         String serviceId = servicesRef.push().getKey(); // Generates a unique ID
 
         if (serviceId != null) {
-            // Create a Service object with the imageURL and name
-            Service service = new Service(imageURL, name);
+            // Create a Service object with the generated ID, imageURL, and name
+            Service service = new Service(serviceId, imageURL, name);
 
             // Use the generated ID to insert the service data
             servicesRef.child(serviceId).setValue(service)
@@ -178,6 +178,7 @@ public class AddServiceActivity extends AppCompatActivity {
             Toast.makeText(AddServiceActivity.this, "Failed to generate a unique ID", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
 //    private void uploadData() {

@@ -3,8 +3,8 @@ package com.sushmitamalakar.homeserviceapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -28,12 +27,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sushmitamalakar.homeserviceapp.adapter.ServiceAdapter;
+import com.sushmitamalakar.homeserviceapp.databinding.ActivityUserDashboardBinding;
 import com.sushmitamalakar.homeserviceapp.model.Service;
 import com.sushmitamalakar.homeserviceapp.model.User;
 
 import java.util.ArrayList;
 
-public class UserDashboardActivity extends AppCompatActivity {
+public class UserDashboardActivity extends DrawerBaseActivity {
+
+    ActivityUserDashboardBinding activityUserDashboardBinding;
     private DrawerLayout userDrawerLayout;
     private ImageButton toggleImageButton;
     private NavigationView navigationView;
@@ -42,41 +44,40 @@ public class UserDashboardActivity extends AppCompatActivity {
     private GridView servicesGridView;
     private ServiceAdapter serviceAdapter;
     private ArrayList<Service> serviceList;
-    private ArrayList<Service> originalServiceList;  // Store the original list
+    private ArrayList<Service> originalServiceList;
     private SearchView searchView;
     private FirebaseAuth auth;
-    private DatabaseReference databaseReference;
+    private DatabaseReference userDatabaseReference;
+    private DatabaseReference servicesDatabaseReference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_dashboard);
+        activityUserDashboardBinding = ActivityUserDashboardBinding.inflate(getLayoutInflater());
+        allocateActivityTitle("User Dashboard");
+        setContentView(activityUserDashboardBinding.getRoot());
 
-        // Initialize Firebase authentication and database reference
         auth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        userDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
+        servicesDatabaseReference = FirebaseDatabase.getInstance().getReference("services");
 
         userDrawerLayout = findViewById(R.id.userDrawerLayout);
         toggleImageButton = findViewById(R.id.toggleImageButton);
         navigationView = findViewById(R.id.navigationView);
 
-        // Load header views from NavigationView's header layout
         View headerView = navigationView.getHeaderView(0);
         userNameTextView = headerView.findViewById(R.id.userNameTextView);
         userEmailTextView = headerView.findViewById(R.id.userEmailTextView);
         profileImageView = headerView.findViewById(R.id.profileImageView);
 
-        // Initialize GridView and adapter
         servicesGridView = findViewById(R.id.servicesGridView);
         serviceList = new ArrayList<>();
-        originalServiceList = new ArrayList<>();  // Initialize original service list
+        originalServiceList = new ArrayList<>();
         serviceAdapter = new ServiceAdapter(UserDashboardActivity.this, serviceList);
         servicesGridView.setAdapter(serviceAdapter);
 
-        // Initialize SearchView and configure search behavior
         searchView = findViewById(R.id.searchView);
         searchView.clearFocus();
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -93,81 +94,58 @@ public class UserDashboardActivity extends AppCompatActivity {
         loadUserData();
         fetchServices();
 
-        // Drawer toggle button listener
-        toggleImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userDrawerLayout.openDrawer(GravityCompat.START);
+        servicesGridView.setOnItemClickListener((parent, view, position, id) -> {
+            Service selectedService = serviceList.get(position);
+            if (selectedService.getServiceId() != null) {
+                checkUserLocationBeforeProceeding(selectedService.getServiceId());
+            } else {
+                Toast.makeText(UserDashboardActivity.this, "Service ID is missing.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.myProfileItem) {
-                    openProfileActivity();
-                    return true;
-                } else if (id == R.id.logoutItem) {
-                    handleLogout();
-                    return true;
-                }
-                userDrawerLayout.closeDrawer(GravityCompat.START);
-                return false;
-            }
-        });
+        toggleImageButton.setOnClickListener(v -> userDrawerLayout.openDrawer(GravityCompat.START));
     }
 
-    // Method to search services based on query
     public void searchList(String text) {
         ArrayList<Service> filteredList = new ArrayList<>();
-
-        // Filter from the original service list to ensure it's not modified
         for (Service service : originalServiceList) {
             if (service.getServiceTitle().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(service);
             }
         }
-
-        // Update the service list in the adapter
         serviceAdapter.searchServiceList(filteredList);
         serviceAdapter.notifyDataSetChanged();
     }
 
-    // Fetch all services from Firebase
     private void fetchServices() {
-        DatabaseReference servicesReference = FirebaseDatabase.getInstance().getReference("services");
-        servicesReference.addValueEventListener(new ValueEventListener() {
+        servicesDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 serviceList.clear();
                 originalServiceList.clear();
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Service service = snapshot.getValue(Service.class);
                     if (service != null) {
+                        service.setServiceId(snapshot.getKey()); // Set serviceId using Firebase key
                         serviceList.add(service);
                         originalServiceList.add(service);
                     }
                 }
-
                 serviceAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("UserDashboardActivity", "Failed to load services: " + databaseError.getMessage());
                 Toast.makeText(UserDashboardActivity.this, "Failed to load services", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Method to load user data from Firebase and update the UI
     private void loadUserData() {
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
             String userId = currentUser.getUid();
-            databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
+            userDatabaseReference.child(userId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
@@ -175,11 +153,7 @@ public class UserDashboardActivity extends AppCompatActivity {
                         if (user != null) {
                             userNameTextView.setText(user.getFullName());
                             userEmailTextView.setText(user.getEmail());
-                            if (user.getImageUrl() != null && !user.getImageUrl().isEmpty()) {
-                                Glide.with(UserDashboardActivity.this).load(user.getImageUrl()).into(profileImageView);
-                            } else {
-                                profileImageView.setImageResource(R.drawable.user_icon); // default image
-                            }
+                            Glide.with(UserDashboardActivity.this).load(user.getImageUrl()).into(profileImageView);
                         }
                     } else {
                         Toast.makeText(UserDashboardActivity.this, "User data not found", Toast.LENGTH_SHORT).show();
@@ -188,26 +162,33 @@ public class UserDashboardActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e("UserDashboardActivity", "Failed to load user data: " + databaseError.getMessage());
                     Toast.makeText(UserDashboardActivity.this, "Failed to load user data", Toast.LENGTH_SHORT).show();
                 }
             });
-        } else {
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Method to open the Profile Activity
-    private void openProfileActivity() {
-        Log.d("UserDashboardActivity", "Opening ProfileActivity");
-        startActivity(new Intent(UserDashboardActivity.this, ProfileActivity.class));
-        userDrawerLayout.closeDrawer(GravityCompat.START);
-    }
+    private void checkUserLocationBeforeProceeding(String serviceId) {
+        String userId = auth.getCurrentUser().getUid();
+        DatabaseReference locationRef = userDatabaseReference.child(userId).child("location");
 
-    // Method to handle user logout
-    private void handleLogout() {
-        auth.signOut();
-        startActivity(new Intent(UserDashboardActivity.this, LoginActivity.class));
-        finish();
+        locationRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Intent intent = new Intent(UserDashboardActivity.this, ProviderListActivity.class);
+                    intent.putExtra("serviceId", serviceId);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(UserDashboardActivity.this, "Please set your location first.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(UserDashboardActivity.this, MapActivity.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(UserDashboardActivity.this, "Error checking location", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

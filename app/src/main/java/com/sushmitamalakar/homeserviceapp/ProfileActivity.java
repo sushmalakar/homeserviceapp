@@ -19,13 +19,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sushmitamalakar.homeserviceapp.databinding.ActivityLogoutBinding;
+import com.sushmitamalakar.homeserviceapp.databinding.ActivityProfileBinding;
 import com.sushmitamalakar.homeserviceapp.model.User;
 
 import com.bumptech.glide.Glide;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends DrawerBaseActivity {
+    ActivityProfileBinding activityProfileBinding;
     private TextView titleName, profileName, profileMobile, profileEmail;
     private CircleImageView userIconImageView;
     private Button editProfileBtn;
@@ -36,7 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        activityProfileBinding = ActivityProfileBinding.inflate(getLayoutInflater());
+        setContentView(activityProfileBinding.getRoot());
 
         // Initialize Firebase components
         auth = FirebaseAuth.getInstance();

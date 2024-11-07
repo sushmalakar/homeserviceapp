@@ -2,23 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
-
-
-
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -30,13 +26,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeServiceApp"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".TestActivity"-->
-<!--            android:exported="false"-->
-<!--            android:label="@string/title_activity_test"-->
-<!--            android:theme="@style/Theme.HomeServiceApp.NoActionBar" />-->
-        <activity android:name=".RegisterActivity" android:exported="true">
-        <!-- android:theme="@style/SplashScreenTheme" -->
+        <activity
+            android:name=".BookingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LogoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DrawerBaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true">
+
+            <!-- android:theme="@style/SplashScreenTheme" -->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,19 +47,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".MapActivity"/>
-        <activity android:name=".UserDashboardActivity"/>
-        <activity android:name=".ProfileActivity"/>
-        <activity android:name=".EditProfileActivity"/>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".MapActivity" />
+        <activity android:name=".UserDashboardActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".ProviderListActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_api_key" />
 
-        <uses-library android:name="com.google.android.maps"/>
-
+        <uses-library android:name="com.google.android.maps" />
     </application>
 
 </manifest>

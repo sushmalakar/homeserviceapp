@@ -10,6 +10,8 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="already_have_an_account_login">Already have an account? LOGIN</string>
+    <string name="menu_drawer_open">Drawer Open</string>
+    <string name="menu_drawer_close">Drawer Close</string>
 
     <!--    OTP Screen-->
     <string name="close_icon">close icon</string>
@@ -19,8 +21,8 @@
     <string name="verify_code_button">Verify Code</string>
     <string name="user_menu">menu</string>
     <string name="search_services">Search Services...</string>
-    
-<!--    Google Map API Key-->
+
+    <!--    Google Map API Key-->
     <string name="map_api_key">AIzaSyCL2N9v3XaFNGY7UPbuBfS0Ekntuv97D9Q</string>
     <string name="service_icons_description">Service Icon\n</string>
 </resources>

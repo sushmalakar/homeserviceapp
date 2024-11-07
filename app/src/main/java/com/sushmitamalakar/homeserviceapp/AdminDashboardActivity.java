@@ -5,10 +5,16 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AdminDashboardActivity extends AppCompatActivity {
+import com.sushmitamalakar.homeserviceapp.databinding.ActivityAdminDashboardBinding;
+
+public class AdminDashboardActivity extends DrawerBaseActivity {
+
+    ActivityAdminDashboardBinding activityAdminDashboardBinding;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_dashboard);
+        activityAdminDashboardBinding =ActivityAdminDashboardBinding.inflate(getLayoutInflater());
+        allocateActivityTitle("Dashboard");
+        setContentView(activityAdminDashboardBinding.getRoot());
     }
 }

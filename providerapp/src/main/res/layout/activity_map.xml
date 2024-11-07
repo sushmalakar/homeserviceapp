@@ -30,4 +30,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <Button
+        android:id="@+id/findServicesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Services"
+        android:backgroundTint="@color/yellow"
+        android:textColor="@color/black"
+        style="@style/ButtonStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

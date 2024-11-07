@@ -27,16 +27,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeServiceApp">
 
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="true">
+        <activity android:name=".RegisterActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
+        <activity android:name=".ForgotPasswordActivity"/>
         <activity android:name=".ProviderDashboardActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".EditProfileActivity" />

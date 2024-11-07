@@ -8,16 +8,22 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AdminDashboardActivity extends AppCompatActivity {
-    private Button addServiceButton, showServiceButton;
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityAdminDashboardBinding;
+
+public class AdminDashboardActivity extends DrawerBaseActivity {
+    ActivityAdminDashboardBinding activityAdminDashboardBinding;
+    private Button addServiceButton, showServiceButton,verifyDocumentButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_dashboard);
+        activityAdminDashboardBinding = ActivityAdminDashboardBinding.inflate(getLayoutInflater());
+        allocateActivityTitle("Dashboard");
+        setContentView(activityAdminDashboardBinding.getRoot());
 
         addServiceButton = findViewById(R.id.addServiceButton);
         showServiceButton = findViewById(R.id.showServiceButton);
+        verifyDocumentButton = findViewById(R.id.verifyDocumentButton);
 
 
         addServiceButton.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +37,13 @@ public class AdminDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AdminDashboardActivity.this, ShowServiceActivity.class));
+
+            }
+        });
+        verifyDocumentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminDashboardActivity.this, ShowPendingDocumentsActivity.class));
 
             }
         });

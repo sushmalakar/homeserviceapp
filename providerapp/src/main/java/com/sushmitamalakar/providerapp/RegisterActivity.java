@@ -41,6 +41,12 @@ public class RegisterActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("providers");
 
+        // If user is already logged in, redirect to dashboard
+        if (auth.getCurrentUser() != null) {
+            redirectToDashboard();
+            return;  // Exit the method to avoid initializing views if user is already logged in
+        }
+
         // Bind UI elements
         fullNameEditText = findViewById(R.id.regFullNameEditText);
         emailEditText = findViewById(R.id.regEmailEditText);
@@ -64,7 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-//                Toast.makeText(RegisterActivity.this, "successful", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -109,15 +114,14 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseUser provider = auth.getCurrentUser();
                     if (provider != null) {
                         String providerId = provider.getUid();
-                        String defaultImageUrl = ""; // Set this to an empty string or any default value
+                        String defaultImageUrl = "";  // Set this to an empty string or any default value
                         Provider newProvider = new Provider(fullName, email, mobileNo, defaultImageUrl);
-//                        User newUser = new User(fullName, email, mobileNo);
                         databaseReference.child(providerId).setValue(newProvider).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                    redirectToDashboard();
                                 }
                             }
                         });
@@ -139,5 +143,11 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void redirectToDashboard() {
+        Intent intent = new Intent(RegisterActivity.this, ProviderDashboardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
+        startActivity(intent);
     }
 }

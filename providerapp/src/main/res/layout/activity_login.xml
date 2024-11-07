@@ -86,6 +86,15 @@
             android:textColor="@color/black"
             android:layout_marginTop="8dp"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/quantum_googred"
+            android:text="Forgot Password?"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:id="@+id/forgotPasswordTextView"
+            android:layout_marginTop="8dp"/>
 
 <!--        <Button-->
 <!--            android:layout_width="match_parent"-->

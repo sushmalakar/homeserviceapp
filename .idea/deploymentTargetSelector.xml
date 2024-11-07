@@ -18,10 +18,10 @@
       </SelectionState>
       <SelectionState runConfigName="homeserviceadmin">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-09-26T10:30:10.054388200Z">
+        <DropdownSelection timestamp="2024-10-19T10:28:19.722796900Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\LENOVO\.android\avd\Pixel_7_API_30.avd" />
+              <DeviceId pluginId="Default" identifier="serial=192.168.1.98:39009;connection=1f280faf" />
             </handle>
           </Target>
         </DropdownSelection>

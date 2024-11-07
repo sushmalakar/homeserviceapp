@@ -15,6 +15,9 @@
                     android:id="@+id/myProfileItem"
                     android:title="My Profile"/>
                 <item
+                    android:id="@+id/myLocationItem"
+                    android:title="My Profile"/>
+                <item
                     android:id="@+id/logoutItem"
                     android:title="Logout"/>
             </group>

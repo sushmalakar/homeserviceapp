@@ -44,7 +44,7 @@
                 android:hint="Service">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/serviceEditText"
+                    android:id="@+id/serviceNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
