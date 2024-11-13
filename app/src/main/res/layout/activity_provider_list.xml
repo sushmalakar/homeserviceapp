@@ -1,8 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <!-- Filter Button with Icon -->
     <LinearLayout
+        android:id="@+id/filterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -10,12 +12,11 @@
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:layout_gravity="end"
-        android:onClick="openFilterDialog"
-        android:layout_marginStart="280dp">
-
-        <!-- Filter Icon -->
-
+        android:focusableInTouchMode="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp">
 
         <!-- Filter Text -->
         <TextView
@@ -23,8 +24,9 @@
             android:layout_height="wrap_content"
             android:text="Filter"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_marginStart="4dp"/>
+            android:textColor="@android:color/black" />
+
+        <!-- Filter Icon -->
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -32,10 +34,11 @@
             android:contentDescription="Filter Icon" />
     </LinearLayout>
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/providerRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp" />
-
+        android:padding="16dp"
+        android:layout_below="@id/filterButton" />
 </RelativeLayout>

@@ -18,7 +18,7 @@ public class ServiceViewHolder extends RecyclerView.ViewHolder {
      public ShapeableImageView serviceImage;
     public TextView serviceName;
     public CardView serviceRecyclerCard;
-    public ImageView editIcon;
+    public ImageView editIcon, deleteIcon;
     public ServiceViewHolder(@NonNull View itemView) {
         super(itemView);
 
@@ -26,5 +26,6 @@ public class ServiceViewHolder extends RecyclerView.ViewHolder {
         serviceName = itemView.findViewById(R.id.serviceRecyclerTitle);
         serviceRecyclerCard = itemView.findViewById(R.id.servicesRecyclerCard);
         editIcon = itemView.findViewById(R.id.editIcon);
+        deleteIcon = itemView.findViewById(R.id.deleteIcon);
     }
 }

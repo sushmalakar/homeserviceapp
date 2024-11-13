@@ -12,7 +12,7 @@ import com.sushmitamalakar.homeserviceadmin.databinding.ActivityAdminDashboardBi
 
 public class AdminDashboardActivity extends DrawerBaseActivity {
     ActivityAdminDashboardBinding activityAdminDashboardBinding;
-    private Button addServiceButton, showServiceButton,verifyDocumentButton;
+    private Button addServiceButton, showServiceButton,verifyDocumentButton, pendingBookingsButton, acceptedBookingsButton,rejectedBookingsButton, completedBookingsButton,manageUsers;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +24,11 @@ public class AdminDashboardActivity extends DrawerBaseActivity {
         addServiceButton = findViewById(R.id.addServiceButton);
         showServiceButton = findViewById(R.id.showServiceButton);
         verifyDocumentButton = findViewById(R.id.verifyDocumentButton);
-
+        pendingBookingsButton = findViewById(R.id.pendingBookingsButton);
+        acceptedBookingsButton = findViewById(R.id.acceptedBookingsButton);
+        rejectedBookingsButton = findViewById(R.id.rejectedBookingsButton);
+        completedBookingsButton = findViewById(R.id.completedBookingsButton);
+        manageUsers = findViewById(R.id.manageUsers);
 
         addServiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +49,39 @@ public class AdminDashboardActivity extends DrawerBaseActivity {
             public void onClick(View v) {
                 startActivity(new Intent(AdminDashboardActivity.this, ShowPendingDocumentsActivity.class));
 
+            }
+        });
+
+        acceptedBookingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminDashboardActivity.this, ShowAcceptedBookingsActivity.class));
+            }
+        });
+
+        pendingBookingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminDashboardActivity.this, ShowPendingBookingsActivity.class));
+            }
+        });
+        rejectedBookingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminDashboardActivity.this, ShowRejectedBookingsActivity.class));
+            }
+        });
+
+        completedBookingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminDashboardActivity.this, ShowCompletedBookingsActivity.class));
+            }
+        });
+        manageUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminDashboardActivity.this, ShowUsersActivity.class));
             }
         });
     }

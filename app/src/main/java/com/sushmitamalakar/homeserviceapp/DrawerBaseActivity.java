@@ -48,9 +48,19 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
         if (itemId == R.id.myProfileItem) {
             startActivity(new Intent(this, ProfileActivity.class));
             overridePendingTransition(0, 0);
-        } else if (itemId == R.id.logoutItem) {
+        }else if (itemId == R.id.myBookingsItem) {
+            startActivity(new Intent(this, MyBookingsActivity.class));
+            overridePendingTransition(0, 0);
+        }else if (itemId == R.id.myLocationItem) {
+            startActivity(new Intent(this, MapActivity.class));
+            overridePendingTransition(0, 0);
+        }else if (itemId == R.id.dashboardItem) {
+            startActivity(new Intent(this, UserDashboardActivity.class));
+            overridePendingTransition(0, 0);
+        }else if (itemId == R.id.logoutItem) {
             performLogout();
-        } else {
+        }
+        else {
             return false;
         }
 

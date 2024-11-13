@@ -1,34 +1,5 @@
 package com.sushmitamalakar.homeserviceapp.model;
 
-//public class Provider {
-//    private String providerId;
-//    private String charge;
-//
-//    public Provider() {}
-//
-//    public Provider(String providerId, String charge) {
-//        this.providerId = providerId;
-//        this.charge = charge;
-//    }
-//
-//    public String getProviderId() {
-//        return providerId;
-//    }
-//
-//    public void setProviderId(String providerId) {
-//        this.providerId = providerId;
-//    }
-//
-//    public String getCharge() {
-//        return charge;
-//    }
-//
-//    public void setCharge(String charge) {
-//        this.charge = charge;
-//    }
-//}
-
-
 public class Provider {
     private String providerId;
     private String fullName;
@@ -70,6 +41,7 @@ public class Provider {
     public static class Location {
         private double latitude;
         private double longitude;
+        private String shortAddress; // Add this field
 
         public Location() {}
 
@@ -86,9 +58,17 @@ public class Provider {
             return longitude;
         }
 
+        public String getShortAddress() {
+            return shortAddress;
+        }
+
+        public void setShortAddress(String shortAddress) {
+            this.shortAddress = shortAddress;
+        }
+
         @Override
         public String toString() {
-            return latitude + ", " + longitude;
+            return shortAddress != null ? shortAddress : latitude + ", " + longitude;
         }
     }
 }

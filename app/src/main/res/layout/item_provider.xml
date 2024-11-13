@@ -54,7 +54,7 @@
                 android:id="@+id/providerLocation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Provider Location"
+                android:hint="Provider Location"
                 android:textSize="14sp"
                 android:textColor="@android:color/darker_gray"
                 app:layout_constraintTop_toBottomOf="@id/providerName"

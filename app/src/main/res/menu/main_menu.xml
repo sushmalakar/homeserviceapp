@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/manualBookingItem"
-            android:title="Manual Booking"/>
+            android:id="@+id/dashboardItem"
+            android:title="Dashboard"/>
         <item
-            android:id="@+id/yourBookingsItem"
-            android:title="Your Bookings"/>
+            android:id="@+id/myBookingsItem"
+            android:title="My Bookings"/>
     </group>
     <item android:title="Profile">
         <menu>
@@ -16,7 +16,7 @@
                     android:title="My Profile"/>
                 <item
                     android:id="@+id/myLocationItem"
-                    android:title="My Profile"/>
+                    android:title="My location"/>
                 <item
                     android:id="@+id/logoutItem"
                     android:title="Logout"/>

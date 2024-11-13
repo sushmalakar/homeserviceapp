@@ -14,12 +14,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sushmitamalakar.homeserviceadmin.adapter.PendingDocumentsAdapter;
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityShowPendingDocumentsBinding;
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityShowServicesBinding;
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityVerifyPendingDocumentsBinding;
 import com.sushmitamalakar.homeserviceadmin.model.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowPendingDocumentsActivity extends AppCompatActivity {
+public class ShowPendingDocumentsActivity extends DrawerBaseActivity {
+    ActivityShowPendingDocumentsBinding activityShowPendingDocumentsBinding;
     private RecyclerView recyclerView;
     private List<Document> documentList;
     private DatabaseReference databaseReference;
@@ -28,8 +32,9 @@ public class ShowPendingDocumentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_pending_documents);
-
+        activityShowPendingDocumentsBinding = ActivityShowPendingDocumentsBinding.inflate(getLayoutInflater());
+        allocateActivityTitle("Show Pending Documents");
+        setContentView(activityShowPendingDocumentsBinding.getRoot());
         recyclerView = findViewById(R.id.pendingDocumentsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -46,49 +51,6 @@ public class ShowPendingDocumentsActivity extends AppCompatActivity {
 
         // Firebase reference to the "documents" node
         databaseReference = FirebaseDatabase.getInstance().getReference("documents");
-
-        // Event listener to fetch pending documents
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                documentList.clear();
-//                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
-//                    Document document = itemSnapshot.getValue(Document.class);
-//
-//                    if (document != null && "Pending".equalsIgnoreCase(document.getStatus())) {
-//                        String providerId = document.getProviderId();
-//
-//                        // Fetch provider fullName using providerId
-//                        DatabaseReference providerRef = FirebaseDatabase.getInstance().getReference("providers").child(providerId);
-//                        providerRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot providerSnapshot) {
-//                                if (providerSnapshot.exists()) {
-//                                    String providerName = providerSnapshot.child("fullName").getValue(String.class); // Fetch fullName
-//                                    document.setProviderName(providerName); // Set the providerName in the document
-//                                } else {
-//                                    document.setProviderName("Unknown Provider"); // Fallback if provider is not found
-//                                }
-//                                documentList.add(document);  // Add document with providerName to the list
-//                                adapter.notifyDataSetChanged();  // Notify adapter to update the list
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError error) {
-//                                Log.e("ProviderFetchError", "Error fetching provider name: " + error.getMessage());
-//                            }
-//                        });
-//                    }
-//                }
-//                dialog.dismiss(); // Dismiss the loading dialog once all documents are processed
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                dialog.dismiss();
-//                Log.e("ShowPendingDocuments", "Database error: " + error.getMessage());
-//            }
-//        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

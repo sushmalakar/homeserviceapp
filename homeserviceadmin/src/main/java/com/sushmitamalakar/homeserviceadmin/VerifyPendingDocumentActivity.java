@@ -17,8 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityShowServicesBinding;
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityVerifyPendingDocumentsBinding;
 
-public class VerifyPendingDocumentActivity extends AppCompatActivity {
+public class VerifyPendingDocumentActivity extends DrawerBaseActivity {
+    ActivityVerifyPendingDocumentsBinding activityVerifyPendingDocumentsBinding;
     private ImageView frontDocumentImageView, backDocumentImageView;
     private TextView providerIdTextView, providerNameTextView, documentStatusTextView, documentIdTextView;
     private Button verifyDocumentButton, rejectDocumentButton;
@@ -31,13 +34,16 @@ public class VerifyPendingDocumentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify_pending_documents);
+        activityVerifyPendingDocumentsBinding = ActivityVerifyPendingDocumentsBinding.inflate(getLayoutInflater());
+        allocateActivityTitle("Verify Pending Documents");
+        setContentView(activityVerifyPendingDocumentsBinding.getRoot());
+
 
         // Initialize views
         frontDocumentImageView = findViewById(R.id.frontDocumentImageView);
         backDocumentImageView = findViewById(R.id.backDocumentImageView);
         providerIdTextView = findViewById(R.id.providerIdTextView);
-        providerNameTextView = findViewById(R.id.providerNameTextView); // New TextView for Provider Name
+        providerNameTextView = findViewById(R.id.providerNameTextView);
         documentStatusTextView = findViewById(R.id.documentStatusTextView);
         documentIdTextView = findViewById(R.id.documentIdTextView);
         verifyDocumentButton = findViewById(R.id.verifyDocumentButton);

@@ -27,6 +27,7 @@ public class AdminLoginActivity extends AppCompatActivity {
     private static final String TAG = "AdminLoginActivity";
 
     private FirebaseAuth mAuth;
+    private DatabaseReference adminRef;
     private EditText loginEmailEditText;
     private EditText loginPassEditText;
     private Button loginButton;
@@ -36,9 +37,9 @@ public class AdminLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
 
-        // Initialize Firebase Auth
+        // Initialize Firebase Auth and Database
         mAuth = FirebaseAuth.getInstance();
-
+        adminRef = FirebaseDatabase.getInstance().getReference("admin");
 
         // Initialize UI elements
         loginEmailEditText = findViewById(R.id.loginEmailEditText);
@@ -59,53 +60,81 @@ public class AdminLoginActivity extends AppCompatActivity {
 
         boolean isValid = true;
 
-        // Check if email is empty
+        // Validate email and password
         if (email.isEmpty()) {
             loginEmailEditText.setError("Email is required");
             loginEmailEditText.requestFocus();
             isValid = false;
-        }
-        // Check if email format is valid
-        else if (!isValidEmail(email)) {
+        } else if (!isValidEmail(email)) {
             loginEmailEditText.setError("Invalid email format");
             loginEmailEditText.requestFocus();
             isValid = false;
         }
 
-        // Check if password is empty
         if (password.isEmpty()) {
             loginPassEditText.setError("Password is required");
             loginPassEditText.requestFocus();
             isValid = false;
         }
 
-        // Proceed only if all validations pass
+        // Proceed only if validations pass
         if (isValid) {
-            // Sign in with Firebase Authentication
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Log.d(TAG, "signInWithEmail:success");
-                                Toast.makeText(AdminLoginActivity.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
-
-                                // Debugging log to confirm navigation
-                                Log.d(TAG, "Navigating to AddServiceActivity");
-
-                                Intent intent = new Intent(AdminLoginActivity.this, AdminDashboardActivity.class);
-                                startActivity(intent);
-                                finish(); // Close the login activity
-                            } else {
-                                // If sign in fails
-                                Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(AdminLoginActivity.this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+            // Check if the email exists in the "admin" table
+            checkIfEmailIsAdmin(email, password);
         }
+    }
+
+    private void checkIfEmailIsAdmin(String email, String password) {
+        adminRef.child("email").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String adminEmail = snapshot.getValue(String.class);
+
+                    // Check if the entered email matches the admin email
+                    if (email.equals(adminEmail)) {
+                        // Attempt Firebase Authentication with the provided credentials
+                        signInWithEmailAndPassword(email, password);
+                    } else {
+                        // Email does not match the admin email
+                        Toast.makeText(AdminLoginActivity.this, "Access Denied: You are not an admin.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(AdminLoginActivity.this, "Admin email not found in database.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "DatabaseError: " + error.getMessage());
+                Toast.makeText(AdminLoginActivity.this, "Database Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void signInWithEmailAndPassword(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Log.d(TAG, "signInWithEmail:success");
+
+                            Toast.makeText(AdminLoginActivity.this, "Authentication Successful. Welcome, Admin!", Toast.LENGTH_SHORT).show();
+
+                            // Navigate to Admin Dashboard
+                            Intent intent = new Intent(AdminLoginActivity.this, AdminDashboardActivity.class);
+                            startActivity(intent);
+                            finish(); // Close the login activity
+                        } else {
+                            // If sign in fails
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(AdminLoginActivity.this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
     private boolean isValidEmail(String email) {
@@ -113,6 +142,7 @@ public class AdminLoginActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }
+
 
 //package com.sushmitamalakar.homeserviceadmin;
 //

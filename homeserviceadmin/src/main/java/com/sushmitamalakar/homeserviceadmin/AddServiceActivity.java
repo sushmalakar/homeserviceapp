@@ -28,9 +28,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityAddServicesBinding;
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityShowServicesBinding;
 import com.sushmitamalakar.homeserviceadmin.model.Service;
 
-public class AddServiceActivity extends AppCompatActivity {
+public class AddServiceActivity extends DrawerBaseActivity {
+
+    ActivityAddServicesBinding activityAddServicesBinding;
     private EditText serviceName;
 //    private EditText servicePrice;
     private Button addServiceButton;
@@ -43,7 +48,10 @@ public class AddServiceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_services);
+        activityAddServicesBinding = ActivityAddServicesBinding.inflate(getLayoutInflater());
+        allocateActivityTitle("Service Show");
+        setContentView(activityAddServicesBinding.getRoot());
+
 
         serviceImage = findViewById(R.id.serviceImageView);
 //        servicePrice = findViewById(R.id.priceEditText);

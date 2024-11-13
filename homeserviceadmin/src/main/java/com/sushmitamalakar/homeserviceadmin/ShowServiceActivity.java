@@ -17,9 +17,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import com.sushmitamalakar.homeserviceadmin.adapter.ServiceAdapter;
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityAdminDashboardBinding;
+import com.sushmitamalakar.homeserviceadmin.databinding.ActivityShowServicesBinding;
 import com.sushmitamalakar.homeserviceadmin.model.Service;
 
-public class ShowServiceActivity extends AppCompatActivity {
+public class ShowServiceActivity extends DrawerBaseActivity {
+    ActivityShowServicesBinding activityShowServicesBinding;
     private RecyclerView recyclerView;
     private List<Service> serviceList;
     private DatabaseReference databaseReference;
@@ -28,7 +31,9 @@ public class ShowServiceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_services);
+        activityShowServicesBinding = ActivityShowServicesBinding.inflate(getLayoutInflater());
+        allocateActivityTitle("Service Show");
+        setContentView(activityShowServicesBinding.getRoot());
 
         recyclerView = findViewById(R.id.servicesRecyclerView);
 
@@ -56,6 +61,8 @@ public class ShowServiceActivity extends AppCompatActivity {
                 for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
                     Service service = itemSnapshot.getValue(Service.class);
                     if (service != null) {
+                        // Manually set the serviceId using the snapshot key
+                        service.setServiceId(itemSnapshot.getKey());
                         serviceList.add(service);
                     } else {
                         Log.d("ShowServiceActivity", "Service object is null");
@@ -65,6 +72,7 @@ public class ShowServiceActivity extends AppCompatActivity {
                 dialog.dismiss();
                 Log.d("ShowServiceActivity", "Data updated, size: " + serviceList.size());
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

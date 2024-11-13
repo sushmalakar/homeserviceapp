@@ -22,7 +22,7 @@
             android:layout_marginStart="20dp"
             android:padding="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/icon_addpic"/>
+            android:src="@drawable/icon_addpic" />
 
         <!-- Service title text -->
         <TextView
@@ -42,10 +42,21 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="56dp"
             android:layout_centerVertical="true"
             android:src="@android:drawable/ic_menu_edit"
             android:contentDescription="Edit" />
+
+        <!-- Delete icon on the right -->
+        <ImageView
+            android:id="@+id/deleteIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_menu_delete"
+            android:contentDescription="Delete" />
 
     </RelativeLayout>
 

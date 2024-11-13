@@ -10,7 +10,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeServiceApp">
-
+        <activity
+            android:name=".ShowUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShowCompletedBookingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShowRejectedBookingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShowPendingBookingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateBookingStatusActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShowAcceptedBookingsActivity"
+            android:exported="false" />
         <activity
             android:name=".ShowPendingDocumentsActivity"
             android:exported="false" />

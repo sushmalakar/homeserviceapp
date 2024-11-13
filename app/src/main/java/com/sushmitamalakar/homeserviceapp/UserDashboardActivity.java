@@ -3,6 +3,7 @@ package com.sushmitamalakar.homeserviceapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -33,9 +35,8 @@ import com.sushmitamalakar.homeserviceapp.model.User;
 
 import java.util.ArrayList;
 
-public class UserDashboardActivity extends DrawerBaseActivity {
+public class UserDashboardActivity extends AppCompatActivity {
 
-    ActivityUserDashboardBinding activityUserDashboardBinding;
     private DrawerLayout userDrawerLayout;
     private ImageButton toggleImageButton;
     private NavigationView navigationView;
@@ -53,22 +54,22 @@ public class UserDashboardActivity extends DrawerBaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityUserDashboardBinding = ActivityUserDashboardBinding.inflate(getLayoutInflater());
-        allocateActivityTitle("User Dashboard");
-        setContentView(activityUserDashboardBinding.getRoot());
+        setContentView(R.layout.activity_user_dashboard);
 
         auth = FirebaseAuth.getInstance();
         userDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
         servicesDatabaseReference = FirebaseDatabase.getInstance().getReference("services");
 
         userDrawerLayout = findViewById(R.id.userDrawerLayout);
-        toggleImageButton = findViewById(R.id.toggleImageButton);
         navigationView = findViewById(R.id.navigationView);
+        toggleImageButton = findViewById(R.id.toggleImageButton);
+
 
         View headerView = navigationView.getHeaderView(0);
         userNameTextView = headerView.findViewById(R.id.userNameTextView);
         userEmailTextView = headerView.findViewById(R.id.userEmailTextView);
         profileImageView = headerView.findViewById(R.id.profileImageView);
+
 
         servicesGridView = findViewById(R.id.servicesGridView);
         serviceList = new ArrayList<>();
@@ -104,6 +105,30 @@ public class UserDashboardActivity extends DrawerBaseActivity {
         });
 
         toggleImageButton.setOnClickListener(v -> userDrawerLayout.openDrawer(GravityCompat.START));
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.myProfileItem) {
+                    openProfileActivity();
+                    return true;
+                } else if (id == R.id.logoutItem) {
+                    handleLogout();
+                    return true;
+                } else if (id == R.id.myBookingsItem) {
+                    openBooking();
+                    return true;
+                }else if (id == R.id.dashboardItem) {
+                    openDashboard();
+                    return true;
+                }else if(id == R.id.myLocationItem){
+                    openLocation();
+                    return true;
+                }
+                userDrawerLayout.closeDrawer(GravityCompat.START);
+                return false;
+            }
+        });
     }
 
     public void searchList(String text) {
@@ -178,6 +203,7 @@ public class UserDashboardActivity extends DrawerBaseActivity {
                 if (snapshot.exists()) {
                     Intent intent = new Intent(UserDashboardActivity.this, ProviderListActivity.class);
                     intent.putExtra("serviceId", serviceId);
+                    intent.putExtra("userId", userId);
                     startActivity(intent);
                 } else {
                     Toast.makeText(UserDashboardActivity.this, "Please set your location first.", Toast.LENGTH_SHORT).show();
@@ -190,5 +216,25 @@ public class UserDashboardActivity extends DrawerBaseActivity {
                 Toast.makeText(UserDashboardActivity.this, "Error checking location", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void openProfileActivity() {
+        startActivity(new Intent(this, ProfileActivity.class));
+    }
+
+    private void openDashboard() {
+        startActivity(new Intent(this, UserDashboardActivity.class));
+    }
+    private void openBooking() {
+        startActivity(new Intent(this, MyBookingsActivity.class));
+    }
+
+    private void openLocation() {
+        startActivity(new Intent(this, MapActivity.class));
+    }
+    private void handleLogout() {
+        auth.signOut();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

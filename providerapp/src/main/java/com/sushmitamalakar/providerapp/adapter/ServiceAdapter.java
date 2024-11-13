@@ -1,4 +1,3 @@
-// Update the adapter to extend BaseAdapter for GridView
 package com.sushmitamalakar.providerapp.adapter;
 
 import android.content.Context;

@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-09-23T05:46:14.962186Z">
+        <DropdownSelection timestamp="2024-11-12T00:48:09.507945800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\LENOVO\.android\avd\Pixel_7_API_30.avd" />
@@ -18,10 +18,10 @@
       </SelectionState>
       <SelectionState runConfigName="homeserviceadmin">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-10-19T10:28:19.722796900Z">
+        <DropdownSelection timestamp="2024-11-11T11:39:51.629615700Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="Default" identifier="serial=192.168.1.98:39009;connection=1f280faf" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\LENOVO\.android\avd\Pixel_7_API_30.avd" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -43,7 +43,7 @@
       </SelectionState>
       <SelectionState runConfigName="providerapp">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-09-24T10:46:15.148217100Z">
+        <DropdownSelection timestamp="2024-11-12T01:29:36.285402Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\LENOVO\.android\avd\Pixel_7_API_30.avd" />

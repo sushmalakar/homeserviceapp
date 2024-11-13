@@ -1,0 +1,50 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- User Full Name -->
+        <TextView
+            android:id="@+id/userRecyclerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Full Name"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- User Mobile Number -->
+        <TextView
+            android:id="@+id/userMobileTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userRecyclerTitle"
+            android:text="Mobile: 1234567890"
+            android:textSize="14sp" />
+
+        <!-- Edit Icon -->
+        <ImageView
+            android:id="@+id/editIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:src="@android:drawable/ic_menu_edit" />
+
+        <!-- Delete Icon -->
+        <ImageView
+            android:id="@+id/deleteIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_toStartOf="@id/editIcon"
+            android:layout_marginEnd="8dp"
+            android:src="@android:drawable/ic_menu_delete" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

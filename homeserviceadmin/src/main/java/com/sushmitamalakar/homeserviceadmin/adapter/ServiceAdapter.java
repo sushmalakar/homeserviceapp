@@ -2,17 +2,22 @@ package com.sushmitamalakar.homeserviceadmin.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sushmitamalakar.homeserviceadmin.EditServiceActivity;
 import com.sushmitamalakar.homeserviceadmin.R;
 import com.sushmitamalakar.homeserviceadmin.ShowProviderActivity;
@@ -38,6 +43,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ServiceViewHolder holder, int position) {
         String imageUrl = serviceList.get(position).getServiceImage();
+        String serviceId = serviceList.get(position).getServiceId();
+
 
         // Load image with placeholders and error images
         Glide.with(context)
@@ -72,6 +79,43 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceViewHolder> {
                 context.startActivity(editIntent);
             }
         });
+
+        // Handle the delete icon click
+        holder.deleteIcon.setOnClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Delete Service")
+                    .setMessage("Are you sure you want to delete this service?")
+                    .setPositiveButton("Yes", (dialog, which) -> deleteService(serviceId, holder.getAdapterPosition()))
+                    .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                    .show();
+        });
+    }
+
+    // Method to delete a service from Firebase
+    private void deleteService(String serviceId, int position) {
+        if (serviceId == null || serviceId.isEmpty()) {
+            Toast.makeText(context, "Error: Service ID is missing or null", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // Log the serviceId for debugging
+        Log.d("ServiceAdapter", "Deleting service with ID: " + serviceId);
+
+        // Reference to the Firebase database (update the path as per your Firebase structure)
+        DatabaseReference servicesRef = FirebaseDatabase.getInstance().getReference("services").child(serviceId);
+
+        // Delete the service
+        servicesRef.removeValue()
+                .addOnSuccessListener(aVoid -> {
+                    // Remove the item from the list and notify the adapter
+                    serviceList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, serviceList.size());
+                    Toast.makeText(context, "Service deleted successfully", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Failed to delete service: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("ServiceAdapter", "Error deleting service: " + e.getMessage());
+                });
     }
 
 
